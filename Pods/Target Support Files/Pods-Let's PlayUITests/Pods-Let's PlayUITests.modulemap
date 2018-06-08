@@ -1,0 +1,6 @@
+framework module Pods_Let_s_PlayUITests {
+  umbrella header "Pods-Let's PlayUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

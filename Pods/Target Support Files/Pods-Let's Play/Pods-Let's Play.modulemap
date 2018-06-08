@@ -1,0 +1,6 @@
+framework module Pods_Let_s_Play {
+  umbrella header "Pods-Let's Play-umbrella.h"
+
+  export *
+  module * { export * }
+}
