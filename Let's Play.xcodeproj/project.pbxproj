@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E600810720CB50A60009BDF9 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E600810620CB50A60009BDF9 /* RegisterViewController.swift */; };
 		E67CA3AA20C64152003AAEA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67CA3A920C64152003AAEA7 /* AppDelegate.swift */; };
 		E67CA3AC20C64152003AAEA7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67CA3AB20C64152003AAEA7 /* ViewController.swift */; };
 		E67CA3AF20C64152003AAEA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E67CA3AD20C64152003AAEA7 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E600810620CB50A60009BDF9 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		E67CA3A620C64150003AAEA7 /* Let's Play.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Let's Play.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E67CA3A920C64152003AAEA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E67CA3AB20C64152003AAEA7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				E67CA3A920C64152003AAEA7 /* AppDelegate.swift */,
+				E600810620CB50A60009BDF9 /* RegisterViewController.swift */,
 				E67CA3AB20C64152003AAEA7 /* ViewController.swift */,
 				E67CA3AD20C64152003AAEA7 /* Main.storyboard */,
 				E67CA3B320C64152003AAEA7 /* Assets.xcassets */,
@@ -265,6 +268,7 @@
 				E67CA3B220C64152003AAEA7 /* Let_s_Play.xcdatamodeld in Sources */,
 				E67CA3AC20C64152003AAEA7 /* ViewController.swift in Sources */,
 				E67CA3AA20C64152003AAEA7 /* AppDelegate.swift in Sources */,
+				E600810720CB50A60009BDF9 /* RegisterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
