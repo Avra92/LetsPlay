@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -45,6 +46,9 @@
                                 <rect key="frame" x="106" y="400" width="156" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Forgot Password"/>
+                                <connections>
+                                    <segue destination="w50-PX-4EL" kind="presentation" identifier="ForgotPassView" id="JL3-dF-paf"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bAe-8h-Xcz">
                                 <rect key="frame" x="142" y="617" width="83" height="30"/>
@@ -62,11 +66,249 @@
                     <connections>
                         <outlet property="password" destination="4nz-y1-bFg" id="8wU-E1-ci8"/>
                         <outlet property="username" destination="3Oz-P9-Mjq" id="HHy-FN-Rva"/>
+                        <segue destination="XNc-ZM-tD1" kind="presentation" identifier="HomeView" id="ChE-aJ-yAj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="117.59999999999999" y="114.69265367316342"/>
+        </scene>
+        <!--Forgot Pass View Controller-->
+        <scene sceneID="aZe-KL-s2x">
+            <objects>
+                <viewController id="w50-PX-4EL" customClass="ForgotPassViewController" customModule="Let_s_Play" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OiK-as-yYJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please provide your registered username?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9w-E3-mzR">
+                                <rect key="frame" x="16" y="218" width="343" height="78"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qi8-uZ-1Gb">
+                                <rect key="frame" x="16" y="304" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KlW-Lv-kXT">
+                                <rect key="frame" x="116" y="364" width="142" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="Submit:" destination="w50-PX-4EL" eventType="touchUpInside" id="67k-iA-Fcu"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Jbt-xC-4o4"/>
+                    </view>
+                    <connections>
+                        <outlet property="username" destination="qi8-uZ-1Gb" id="XQv-Hf-jqH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h7P-eg-QjQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="85.599999999999994" y="855.02248875562225"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="vrL-Ly-jNx">
+            <objects>
+                <viewController id="Sex-SI-5UC" customClass="GameViewController" customModule="Let_s_Play" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5dF-Zf-Jzs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please select the game you want to add?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MTP-9w-Qdq">
+                                <rect key="frame" x="16" y="32" width="343" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wUM-zG-sdI">
+                                <rect key="frame" x="16" y="87" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="GameSelect:" destination="Sex-SI-5UC" eventType="touchDown" id="kBn-Ft-iq6"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Game ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Zq-Ta-MgC">
+                                <rect key="frame" x="16" y="216" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select your Platform" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JkM-Qa-buE">
+                                <rect key="frame" x="16" y="268" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="PlatformSelect:" destination="Sex-SI-5UC" eventType="touchDown" id="ZuN-S8-NQl"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fPb-iz-A15">
+                                <rect key="frame" x="127" y="582" width="144" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.67982026139999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Add Game">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="addGame:" destination="Sex-SI-5UC" eventType="touchUpInside" id="YXk-TL-OXb"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BvT-AV-u2W">
+                                <rect key="frame" x="16" y="319" width="343" height="226"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Please note for CSGO and Dota 2, please check your steam profile URL.   Select "Steam 64 ID" if your profile URL looks like "https://steamcommunity.com/profiles/&lt;steam64id&gt;".  Select "Custom URL ID" if your profile URL looks like "https://steamcommunity.com/id/&lt;id&gt;".</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please fill your Game ID and Platform?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BQT-tH-1Hq">
+                                <rect key="frame" x="16" y="169" width="343" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="tMZ-8W-aaJ"/>
+                    </view>
+                    <connections>
+                        <outlet property="details" destination="BQT-tH-1Hq" id="uHS-3k-i18"/>
+                        <outlet property="game" destination="wUM-zG-sdI" id="Awb-WN-sLE"/>
+                        <outlet property="gameId" destination="7Zq-Ta-MgC" id="2Qb-e1-8r6"/>
+                        <outlet property="platform" destination="JkM-Qa-buE" id="AzI-Hy-0Sc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q3s-Tw-aOM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="85.599999999999994" y="1601.649175412294"/>
+        </scene>
+        <!--Home View Controller-->
+        <scene sceneID="lcI-Xr-F39">
+            <objects>
+                <viewController id="XNc-ZM-tD1" customClass="HomeViewController" customModule="Let_s_Play" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8SD-18-cda">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rap-5h-ezk">
+                                <rect key="frame" x="0.0" y="0.0" width="125" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Games"/>
+                                <connections>
+                                    <segue destination="Sex-SI-5UC" kind="presentation" identifier="GameView" id="jSx-Wh-ns0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tce-mW-3bs">
+                                <rect key="frame" x="125.5" y="0.0" width="125" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Friends"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OYX-4z-IEn">
+                                <rect key="frame" x="251" y="0.0" width="124" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Search"/>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4v5-nP-0rg">
+                                <rect key="frame" x="0.0" y="41" width="375" height="626"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GameCell" rowHeight="180" id="xKa-SU-c7C" customClass="GameListCell" customModule="Let_s_Play" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="180"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xKa-SU-c7C" id="GTX-mU-nts">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="179.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sty-BY-7Ua">
+                                                    <rect key="frame" x="53" y="118" width="113.5" height="40"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <state key="normal" title="Share"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEh-Gm-ie5">
+                                                    <rect key="frame" x="208.5" y="118" width="113.5" height="40"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <state key="normal" title="Let's Play"/>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TkS-mc-x7U">
+                                                    <rect key="frame" x="88" y="23" width="198" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Bg-oT-nlo">
+                                                    <rect key="frame" x="95" y="65.5" width="184" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="9mv-FS-tTE"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="2Bg-oT-nlo" secondAttribute="trailing" constant="81" id="4qs-A0-yYZ"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="aEh-Gm-ie5" secondAttribute="bottom" constant="11" id="5vO-OC-sZb"/>
+                                                <constraint firstItem="TkS-mc-x7U" firstAttribute="leading" relation="lessThanOrEqual" secondItem="GTX-mU-nts" secondAttribute="leadingMargin" constant="73" id="7Uh-2P-vOP"/>
+                                                <constraint firstItem="aEh-Gm-ie5" firstAttribute="top" secondItem="2Bg-oT-nlo" secondAttribute="bottom" constant="22.5" id="88f-tR-jWm"/>
+                                                <constraint firstItem="sty-BY-7Ua" firstAttribute="leading" relation="lessThanOrEqual" secondItem="GTX-mU-nts" secondAttribute="leadingMargin" constant="38" id="8Na-Sb-AN0"/>
+                                                <constraint firstItem="sty-BY-7Ua" firstAttribute="top" secondItem="2Bg-oT-nlo" secondAttribute="bottom" constant="22.5" id="Cgy-gJ-aPZ"/>
+                                                <constraint firstItem="2Bg-oT-nlo" firstAttribute="leading" relation="lessThanOrEqual" secondItem="GTX-mU-nts" secondAttribute="leadingMargin" constant="80" id="Do5-1y-plC"/>
+                                                <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="TkS-mc-x7U" secondAttribute="trailing" constant="74" id="PTF-pe-vFx"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="sty-BY-7Ua" secondAttribute="bottom" constant="11" id="Pir-GB-dM5"/>
+                                                <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="aEh-Gm-ie5" secondAttribute="trailing" constant="38" id="QEv-uZ-QQN"/>
+                                                <constraint firstItem="aEh-Gm-ie5" firstAttribute="width" secondItem="sty-BY-7Ua" secondAttribute="width" id="WKw-hv-eKD"/>
+                                                <constraint firstItem="2Bg-oT-nlo" firstAttribute="top" secondItem="TkS-mc-x7U" secondAttribute="bottom" constant="22" id="a9V-r7-fed"/>
+                                                <constraint firstItem="2Bg-oT-nlo" firstAttribute="top" secondItem="TkS-mc-x7U" secondAttribute="bottom" constant="22" id="bVw-NB-jhD"/>
+                                                <constraint firstItem="aEh-Gm-ie5" firstAttribute="leading" secondItem="sty-BY-7Ua" secondAttribute="trailing" constant="42" id="qlq-UH-5yI"/>
+                                                <constraint firstItem="aEh-Gm-ie5" firstAttribute="leading" secondItem="sty-BY-7Ua" secondAttribute="trailing" constant="42" id="t8v-G1-s1N"/>
+                                                <constraint firstItem="TkS-mc-x7U" firstAttribute="top" secondItem="GTX-mU-nts" secondAttribute="topMargin" constant="12" id="zY1-1B-pHU"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="game" destination="TkS-mc-x7U" id="bKP-0u-7Aq"/>
+                                            <outlet property="nickname" destination="2Bg-oT-nlo" id="wQQ-w2-iSZ"/>
+                                            <outlet property="play" destination="aEh-Gm-ie5" id="P4T-Hq-NfB"/>
+                                            <outlet property="share" destination="sty-BY-7Ua" id="jLQ-gu-pBp"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="oq7-nN-dFv"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="4v5-nP-0rg" id="JC3-0l-zZO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3qh-Fq-Kuv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="824.79999999999995" y="854.1229385307347"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="nuZ-CH-JTS">

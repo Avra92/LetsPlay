@@ -1,37 +1,30 @@
 //
-//  ViewController.swift
+//  ForgotPassViewController.swift
 //  Let's Play
 //
-//  Created by Avra Ghosh on 4/06/18.
+//  Created by Avra Ghosh on 9/06/18.
 //  Copyright © 2018 Avra Ghosh. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class ForgotPassViewController: UIViewController {
 
     @IBOutlet weak var username: UITextField!
-    @IBOutlet weak var password: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func Login(_ sender: UIButton) {
+    @IBAction func Submit(_ sender: UIButton) {
         let uname = username.text
-        let pass = password.text
-        
-        let url = URL(string: "https://www.jak2018.freehosting.co.nz/api/login.php")!
+        let url = URL(string: "https://www.jak2018.freehosting.co.nz/api/forgotpassword.php")!
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        let postString = "username=\(String(describing: uname!))&password=\(String(describing: pass!))"
+        let postString = "username=\(String(describing: uname!))"
         request.httpBody = postString.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
@@ -56,20 +49,13 @@ class ViewController: UIViewController {
                 if (status == "s")
                 {
                     DispatchQueue.main.async(execute:{
-                        UserDefaults.standard.set("\(String(describing: uname!))", forKey: "username")
-                        self.performSegue(withIdentifier: "HomeView", sender: self)
-                    })
-                }
-                if (status == "e"){
-                    DispatchQueue.main.async(execute:{
-                        let myAlert = UIAlertController(title: "Login Failed", message: "\(message)", preferredStyle: .alert)
+                        let myAlert = UIAlertController(title: " ", message: "\(message)", preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "Ok", style: .default) { action in
-                            print("Login Failed")
+                            self.dismiss(animated: true,completion: nil)
                         }
                         myAlert.addAction(okAction)
                         self.present(myAlert, animated: true, completion:nil)
                     })
-                    return
                 }
             }
             catch let error as NSError{
@@ -78,6 +64,21 @@ class ViewController: UIViewController {
         }
         task.resume()
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
 
 }
-

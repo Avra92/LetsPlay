@@ -95,6 +95,35 @@ class RegisterViewController: UIViewController,UIPickerViewDelegate,UIPickerView
             
             let responseString = String(data: data, encoding: .utf8)
             print("responseString = \(String(describing: responseString))")
+            let Data = responseString?.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+            do
+            {
+                let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? [String: Any]
+                print("JSON Data : \(String(describing: json))")
+                let status = (json!["status"] as? String)!
+                let message = (json!["message"] as? String)!
+                if (status == "s")
+                {
+                    DispatchQueue.main.async(execute:{
+                       let myAlert = UIAlertController(title: "Successful", message: "Registration successful. Thank you!", preferredStyle: .alert)
+                       let okAction = UIAlertAction(title: "Ok", style: .default) { action in
+                           self.dismiss(animated: true,completion: nil)
+                       }
+                       myAlert.addAction(okAction)
+                       self.present(myAlert, animated: true, completion:nil)
+                    })
+                }
+                if (status == "e"){
+                    DispatchQueue.main.async(execute:{
+                        self.showAlert(userMessage: "\(String(describing: message))")
+                    })
+                    return
+                }
+            }
+            catch let error as NSError{
+                print("Failed to load : \(error.localizedDescription)")
+            }
+            
         }
         task.resume()
     }
