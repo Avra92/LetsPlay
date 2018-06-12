@@ -13,6 +13,8 @@
 		E62FF69420CD2AD800BA76DA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62FF69320CD2AD700BA76DA /* Constants.swift */; };
 		E62FF69620CD386200BA76DA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62FF69520CD386200BA76DA /* HomeViewController.swift */; };
 		E62FF69820CD491200BA76DA /* GameListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62FF69720CD491200BA76DA /* GameListCell.swift */; };
+		E62FF69A20CE964A00BA76DA /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62FF69920CE964A00BA76DA /* StatsViewController.swift */; };
+		E62FF69C20CEFBDD00BA76DA /* StatViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62FF69B20CEFBDD00BA76DA /* StatViewCell.swift */; };
 		E67CA3AA20C64152003AAEA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67CA3A920C64152003AAEA7 /* AppDelegate.swift */; };
 		E67CA3AC20C64152003AAEA7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67CA3AB20C64152003AAEA7 /* ViewController.swift */; };
 		E67CA3AF20C64152003AAEA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E67CA3AD20C64152003AAEA7 /* Main.storyboard */; };
@@ -47,6 +49,8 @@
 		E62FF69320CD2AD700BA76DA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E62FF69520CD386200BA76DA /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E62FF69720CD491200BA76DA /* GameListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListCell.swift; sourceTree = "<group>"; };
+		E62FF69920CE964A00BA76DA /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+		E62FF69B20CEFBDD00BA76DA /* StatViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatViewCell.swift; sourceTree = "<group>"; };
 		E67CA3A620C64150003AAEA7 /* Let's Play.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Let's Play.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E67CA3A920C64152003AAEA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E67CA3AB20C64152003AAEA7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -114,9 +118,11 @@
 				E67CA3A920C64152003AAEA7 /* AppDelegate.swift */,
 				E62FF69720CD491200BA76DA /* GameListCell.swift */,
 				E62FF69320CD2AD700BA76DA /* Constants.swift */,
+				E62FF69920CE964A00BA76DA /* StatsViewController.swift */,
 				E62FF69520CD386200BA76DA /* HomeViewController.swift */,
 				E62FF69120CC4E9E00BA76DA /* GameViewController.swift */,
 				E600810620CB50A60009BDF9 /* RegisterViewController.swift */,
+				E62FF69B20CEFBDD00BA76DA /* StatViewCell.swift */,
 				E67CA3AB20C64152003AAEA7 /* ViewController.swift */,
 				E62FF68F20CC08F000BA76DA /* ForgotPassViewController.swift */,
 				E67CA3AD20C64152003AAEA7 /* Main.storyboard */,
@@ -286,8 +292,10 @@
 				E62FF69620CD386200BA76DA /* HomeViewController.swift in Sources */,
 				E67CA3AA20C64152003AAEA7 /* AppDelegate.swift in Sources */,
 				E62FF69420CD2AD800BA76DA /* Constants.swift in Sources */,
+				E62FF69C20CEFBDD00BA76DA /* StatViewCell.swift in Sources */,
 				E62FF69220CC4E9E00BA76DA /* GameViewController.swift in Sources */,
 				E62FF69820CD491200BA76DA /* GameListCell.swift in Sources */,
+				E62FF69A20CE964A00BA76DA /* StatsViewController.swift in Sources */,
 				E600810720CB50A60009BDF9 /* RegisterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

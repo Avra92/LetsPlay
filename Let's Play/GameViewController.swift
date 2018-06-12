@@ -14,8 +14,10 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
     @IBOutlet weak var details: UILabel!
     @IBOutlet weak var gameId: UITextField!
     @IBOutlet weak var platform: UITextField!
-    
+    @IBOutlet weak var infoText: UITextView!
     var selectedField = 0
+    var statArray = [String]()
+    var statValueArray = [String]()
     
     // Creating Game List
     let gameList =     [ "Counter Strike: Global Offensive","Fortnite","PlayerUnknown's Battlegrounds","Clash of Clans","Clash Royale","Dota 2","League of Legends"]
@@ -131,6 +133,7 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
             {
                 if (game.text == "Counter Strike: Global Offensive")
                 {
+                    infoText.text = Constants.infoDict["csdotaInfo"]
                     csgoMenu.dataSource = self
                     csgoMenu.delegate = self
                     csgoMenu.backgroundColor = UIColor.gray
@@ -151,6 +154,15 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
                     fortniteMenu.delegate = self
                     fortniteMenu.backgroundColor = UIColor.gray
                     platform.inputView = fortniteMenu
+                    platform.placeholder = "Select the Platform"
+                }
+                if ((game.text == "Clash of Clans") || (game.text == "Clash Royale"))
+                {
+                    infoText.text = Constants.infoDict["coccrInfo"]
+                    cocMenu.dataSource = self
+                    cocMenu.delegate = self
+                    cocMenu.backgroundColor = UIColor.gray
+                    platform.inputView = cocMenu
                     platform.placeholder = "Select the Platform"
                 }
             }
@@ -183,6 +195,9 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
         let Game = game.text
         let GameId = gameId.text
         let Platform = platform.text
+        statArray = []
+        statValueArray = []
+        
         let uname = UserDefaults.standard.string(forKey: "username") as String!
         
         if ((Game?.isEmpty)! || (GameId?.isEmpty)! || (Platform?.isEmpty)!) {
@@ -194,58 +209,80 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
             self.present(alert, animated: true, completion:nil)
             return
         }
-        
-        let url = URL(string: "https://www.jak2018.freehosting.co.nz/api/addgame.php")!
-        var request = URLRequest(url: url)
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        let postString = "username=\(String(describing: uname!))&game=\(String(describing: Constants.gameDict[Game!]!))&nickname=\(String(describing: GameId!))&platform=\(String(describing: Constants.platDict[Platform!]!))"
-        request.httpBody = postString.data(using: .utf8)
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {                                                 // check for fundamental networking error
-                print("error=\(String(describing: error))")
-                return
-            }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(String(describing: response))")
-            }
-            
-            let responseString = String(data: data, encoding: .utf8)
-            print("responseString = \(String(describing: responseString))")
-            print("postString = \(String(describing: postString))")
-            let Data = responseString?.data(using: String.Encoding.utf8, allowLossyConversion: false)!
-            do
-            {
-                let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? [String: Any]
-                print("JSON Data : \(String(describing: json))")
-                let status = (json!["status"] as? String)!
-                let message = (json!["message"] as? String)!
-                if (status == "s")
-                {
-                    DispatchQueue.main.async(execute:{
-                        self.dismiss(animated: true,completion: nil)
-                    })
-                }
-                if (status == "e"){
-                    DispatchQueue.main.async(execute:{
-                        let myAlert = UIAlertController(title: " ", message: "\(message)", preferredStyle: .alert)
-                        let okAction = UIAlertAction(title: "Ok", style: .default) { action in
-                            print("Error")
-                        }
-                        myAlert.addAction(okAction)
-                        self.present(myAlert, animated: true, completion:nil)
-                    })
+        else {
+            let url = URL(string: "https://www.jak2018.freehosting.co.nz/api/addgame.php")!
+            var request = URLRequest(url: url)
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            let postString = "username=\(String(describing: uname!))&game=\(String(describing: Constants.gameDict[Game!]!))&nickname=\(String(describing: GameId!))&platform=\(String(describing: Constants.platDict[Platform!]!))"
+            request.httpBody = postString.data(using: .utf8)
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                    print("error=\(String(describing: error))")
                     return
                 }
+                
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                    print("response = \(String(describing: response))")
+                }
+                
+                let responseString = String(data: data, encoding: .utf8)
+                print("responseString = \(String(describing: responseString))")
+                print("postString = \(String(describing: postString))")
+                let Data = responseString?.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+                do
+                {
+                    let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? NSDictionary
+                    print("JSON Data : \(String(describing: json))")
+                    let status = (json!["status"] as? String)!
+                    let message = (json!["message"] as? String)!
+                    if (status == "s")
+                    {
+                        if let statDetails = json?.value(forKey: "stats") as? NSArray {
+                            for statDetail in statDetails{
+                                if let statDetailDict = statDetail as? NSDictionary {
+                                    if let stat = statDetailDict.value(forKey: "key"){
+                                        self.statArray.append(stat as! String)
+                                    }
+                                    if let statValue = statDetailDict.value(forKey: "value"){
+                                        self.statValueArray.append(statValue as! String)
+                                    }
+                                }
+                            }
+                        }
+                        print(self.statArray)
+                        print(self.statValueArray)
+                        UserDefaults.standard.set(self.statArray, forKey: "statDetail")
+                        UserDefaults.standard.set(self.statValueArray, forKey: "statValue")
+                        DispatchQueue.main.async(execute:{
+                            let myAlert = UIAlertController(title: " ", message: "\(message)", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "Ok", style: .default) { action in
+                                self.dismiss(animated: true,completion: nil)
+                            }
+                            myAlert.addAction(okAction)
+                            self.present(myAlert, animated: true, completion:nil)
+                            return
+                        })
+                    }
+                    if (status == "e"){
+                        DispatchQueue.main.async(execute:{
+                            let myAlert = UIAlertController(title: " ", message: "\(message)", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "Ok", style: .default) { action in
+                                print("Error")
+                            }
+                            myAlert.addAction(okAction)
+                            self.present(myAlert, animated: true, completion:nil)
+                            return
+                        })
+                    }
+                }
+                catch let error as NSError{
+                    print("Failed to load : \(error.localizedDescription)")
+                }
             }
-            catch let error as NSError{
-                print("Failed to load : \(error.localizedDescription)")
-            }
+            task.resume()
         }
-        task.resume()
-        
     }
     
     override func didReceiveMemoryWarning() {

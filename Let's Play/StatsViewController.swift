@@ -1,51 +1,46 @@
 //
-//  HomeViewController.swift
+//  StatsViewController.swift
 //  Let's Play
 //
-//  Created by Avra Ghosh on 10/06/18.
+//  Created by Avra Ghosh on 11/06/18.
 //  Copyright © 2018 Avra Ghosh. All rights reserved.
 //
 
 import UIKit
 
-class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
-    
+class StatsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    @IBOutlet weak var myView: UIView!
+    @IBOutlet weak var gameIcon: UIImageView!
+    @IBOutlet weak var gameNick: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    var gameArray = [String]()
-    var nickNameArray = [String]()
-    var platformArray = [String]()
-    var nickArray = [String]()
     
+    var gamePass:String?
+    var nickNamePass:String?
+    var platformPass:String?
+    var nickPass:String?
+    
+    var statDetailArray = [String]()
+    var statValueArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view.
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        gameArray = []
-        nickNameArray = []
-        platformArray = []
-        nickArray = []
-        
         tableView.delegate = self
         tableView.dataSource = self
+        gameNick.text = nickPass!
+        gameIcon.image = UIImage(named: gamePass!)
+        statDetailArray = []
+        statValueArray = []
         let uname = UserDefaults.standard.string(forKey: "username") as String!
-        let url = URL(string: "https://www.jak2018.freehosting.co.nz/api/getgameslist.php")!
+        let url = URL(string: "https://www.jak2018.freehosting.co.nz/api/getgamestats.php")!
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        let postString = "username=\(String(describing: uname!))"
+        let postString = "username=\(String(describing: uname!))&game=\(String(describing: Constants.gameDict[gamePass!]!))&nickname=\(String(describing: nickNamePass!))&platform=\(String(describing: platformPass!))&in_game_nick=\(String(describing: nickPass))"
         request.httpBody = postString.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
@@ -64,27 +59,20 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let Data = responseString?.data(using: String.Encoding.utf8, allowLossyConversion: false)!
             do
             {
-                let jsonObj = try JSONSerialization.jsonObject(with: Data!, options: .allowFragments) as? NSDictionary
-                
-                let status = jsonObj!["status"] as! String
-                let message = jsonObj!["message"] as! String
+                let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? NSDictionary
+                print("JSON Data : \(String(describing: json))")
+                let status = (json!["status"] as? String)!
+                let message = (json!["message"] as? String)!
                 if (status == "s")
                 {
-                    if let gameDetails = jsonObj!.value(forKey: "games") as? NSArray {
-                        for gameDetail in gameDetails{
-                            if let gameDetailDict = gameDetail as? NSDictionary {
-                                if let game = gameDetailDict.value(forKey: "game"){
-                                    let Game = Constants.gameReverseDict[game as! String]
-                                    self.gameArray.append(Game!)
+                    if let statDetails = json?.value(forKey: "stats") as? NSArray {
+                        for statDetail in statDetails{
+                            if let statDetailDict = statDetail as? NSDictionary {
+                                if let stat = statDetailDict.value(forKey: "key"){
+                                    self.statDetailArray.append(stat as! String)
                                 }
-                                if let nickName = gameDetailDict.value(forKey: "nickname"){
-                                    self.nickNameArray.append(nickName as! String)
-                                }
-                                if let platform = gameDetailDict.value(forKey: "platform"){
-                                    self.platformArray.append(platform as! String)
-                                }
-                                if let nick = gameDetailDict.value(forKey: "in_game_name"){
-                                    self.nickArray.append(nick as! String)
+                                if let statValue = statDetailDict.value(forKey: "value"){
+                                    self.statValueArray.append(statValue as! String)
                                 }
                                 OperationQueue.main.addOperation({
                                     self.tableView.reloadData()
@@ -97,12 +85,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     DispatchQueue.main.async(execute:{
                         let myAlert = UIAlertController(title: " ", message: "\(message)", preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "Ok", style: .default) { action in
-                            print("Alert: \(message)")
+                            print("Error")
                         }
                         myAlert.addAction(okAction)
                         self.present(myAlert, animated: true, completion:nil)
+                        return
                     })
-                    return
                 }
             }
             catch let error as NSError{
@@ -110,35 +98,38 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         task.resume()
+        
     }
     
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return gameArray.count
+        return statDetailArray.count
         
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "GameCell") as! GameListCell
-        cell.game.text = gameArray[indexPath.row]
-        cell.nickname.text = nickArray[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StatCell") as! StatViewCell
+        cell.statDetail.text = statDetailArray[indexPath.row]
+        cell.statValue.text = statValueArray[indexPath.row]
         cell.layer.cornerRadius = cell.frame.height/2
         return cell
     }
-    
-    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let statsController = storyboard?.instantiateViewController(withIdentifier: "StatsViewController") as? StatsViewController
-        statsController?.gamePass = gameArray[indexPath.row]
-        statsController?.nickNamePass = nickNameArray[indexPath.row]
-        statsController?.platformPass = platformArray[indexPath.row]
-        statsController?.nickPass = nickArray[indexPath.row]
-        self.navigationController?.pushViewController(statsController!, animated: true)
-    }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }
-
-
