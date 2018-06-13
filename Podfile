@@ -6,7 +6,7 @@ target 'Let\'s Play' do
   use_frameworks!
 
   # Pods for Let's Play
-  pod 'Alamofire', '~> 4.7'
+  #pod 'Alamofire', '~> 4.7'
   
 
   target 'Let\'s PlayTests' do

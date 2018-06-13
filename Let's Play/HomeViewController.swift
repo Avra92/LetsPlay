@@ -125,6 +125,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.layer.cornerRadius = cell.frame.height/2
         cell.share.tag = indexPath.row
         cell.share.addTarget(self, action:#selector(Share(sender:)), for: .touchUpInside)
+        cell.play.tag = indexPath.row
+        cell.play.addTarget(self, action: #selector(Play(sender:)), for: .touchUpInside)
         return cell
     }
     
@@ -146,6 +148,77 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         shareController?.searchValue = "%"
         self.navigationController?.pushViewController(shareController!, animated: true)
     }
+    
+    @IBAction func Play(sender : UIButton){
+        let index = sender.tag
+        
+        let usrname = UserDefaults.standard.string(forKey: "username") as String!
+        let game = Constants.gameDict[gameArray[index]]
+        let url = URL(string: "https://www.jak2018.freehosting.co.nz/api/letsplay.php")!
+        var request = URLRequest(url: url)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        let postString = "username=\(String(describing: usrname!))&game=\(String(describing: game!))"
+        request.httpBody = postString.data(using: .utf8)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                print("error=\(String(describing: error))")
+                return
+            }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(String(describing: response))")
+            }
+            
+            let responseString = String(data: data, encoding: .utf8)
+            print("poststring : \(postString)")
+            print("responseString = \(String(describing: responseString))")
+            let Data = responseString?.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+            do
+            {
+                let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? [String: Any]
+                print("JSON Data : \(String(describing: json))")
+                let status = (json!["status"] as? String)!
+                let message = (json!["message"] as? String)!
+                if (status == "s")
+                {
+                    DispatchQueue.main.async(execute:{
+                        let myAlert = UIAlertController(title: " ", message: "\(message)", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "Ok", style: .default) { action in
+                            
+                        }
+                        myAlert.addAction(okAction)
+                        self.present(myAlert, animated: true, completion:nil)
+                    })
+                    return
+                }
+                if (status == "e"){
+                    DispatchQueue.main.async(execute:{
+                        let myAlert = UIAlertController(title: "Alert", message: "\(message)", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "Ok", style: .default) { action in
+                            
+                        }
+                        myAlert.addAction(okAction)
+                        self.present(myAlert, animated: true, completion:nil)
+                    })
+                    return
+                }
+            }
+            catch let error as NSError{
+                print("Failed to load : \(error.localizedDescription)")
+            }
+        }
+        task.resume()
+        
+    }
+    
+    @IBAction func friendList(_ sender: UIButton) {
+        let friendController = storyboard?.instantiateViewController(withIdentifier: "FriendViewController") as? FriendViewController
+        self.navigationController?.pushViewController(friendController!, animated: true)
+    }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

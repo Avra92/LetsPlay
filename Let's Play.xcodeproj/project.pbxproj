@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		E600810720CB50A60009BDF9 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E600810620CB50A60009BDF9 /* RegisterViewController.swift */; };
 		E6070D1F20D04FD8008109CD /* ShareViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6070D1E20D04FD8008109CD /* ShareViewCell.swift */; };
+		E62F1FCA20D152E2009B2C8D /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62F1FC920D152E2009B2C8D /* FriendViewController.swift */; };
+		E62F1FCC20D1584F009B2C8D /* FriendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62F1FCB20D1584F009B2C8D /* FriendViewCell.swift */; };
 		E62FF69020CC08F000BA76DA /* ForgotPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62FF68F20CC08F000BA76DA /* ForgotPassViewController.swift */; };
 		E62FF69220CC4E9E00BA76DA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62FF69120CC4E9E00BA76DA /* GameViewController.swift */; };
 		E62FF69420CD2AD800BA76DA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62FF69320CD2AD700BA76DA /* Constants.swift */; };
@@ -47,6 +49,8 @@
 /* Begin PBXFileReference section */
 		E600810620CB50A60009BDF9 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		E6070D1E20D04FD8008109CD /* ShareViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewCell.swift; sourceTree = "<group>"; };
+		E62F1FC920D152E2009B2C8D /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
+		E62F1FCB20D1584F009B2C8D /* FriendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewCell.swift; sourceTree = "<group>"; };
 		E62FF68F20CC08F000BA76DA /* ForgotPassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassViewController.swift; sourceTree = "<group>"; };
 		E62FF69120CC4E9E00BA76DA /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		E62FF69320CD2AD700BA76DA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -122,9 +126,11 @@
 				E67CA3A920C64152003AAEA7 /* AppDelegate.swift */,
 				E6070D1E20D04FD8008109CD /* ShareViewCell.swift */,
 				E62FF69720CD491200BA76DA /* GameListCell.swift */,
+				E62F1FC920D152E2009B2C8D /* FriendViewController.swift */,
 				E62FF69320CD2AD700BA76DA /* Constants.swift */,
 				E62FF69920CE964A00BA76DA /* StatsViewController.swift */,
 				E62FF69520CD386200BA76DA /* HomeViewController.swift */,
+				E62F1FCB20D1584F009B2C8D /* FriendViewCell.swift */,
 				E62FF69120CC4E9E00BA76DA /* GameViewController.swift */,
 				E600810620CB50A60009BDF9 /* RegisterViewController.swift */,
 				E62FF69B20CEFBDD00BA76DA /* StatViewCell.swift */,
@@ -302,7 +308,9 @@
 				E62FF69C20CEFBDD00BA76DA /* StatViewCell.swift in Sources */,
 				E62FF69220CC4E9E00BA76DA /* GameViewController.swift in Sources */,
 				E62FF69820CD491200BA76DA /* GameListCell.swift in Sources */,
+				E62F1FCA20D152E2009B2C8D /* FriendViewController.swift in Sources */,
 				E62FF69A20CE964A00BA76DA /* StatsViewController.swift in Sources */,
+				E62F1FCC20D1584F009B2C8D /* FriendViewCell.swift in Sources */,
 				E6070D1F20D04FD8008109CD /* ShareViewCell.swift in Sources */,
 				E600810720CB50A60009BDF9 /* RegisterViewController.swift in Sources */,
 			);
