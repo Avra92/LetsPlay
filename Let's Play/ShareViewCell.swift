@@ -1,21 +1,18 @@
 //
-//  GameListCell.swift
+//  ShareViewCell.swift
 //  Let's Play
 //
-//  Created by Avra Ghosh on 10/06/18.
+//  Created by Avra Ghosh on 12/06/18.
 //  Copyright © 2018 Avra Ghosh. All rights reserved.
 //
 
 import UIKit
 
-class GameListCell: UITableViewCell {
-    
-    @IBOutlet weak var game: UILabel!
-    @IBOutlet weak var nickname: UILabel!
-    @IBOutlet weak var share: UIButton!
-    @IBOutlet weak var play: UIButton!
-    
-    
+class ShareViewCell: UITableViewCell {
+
+    @IBOutlet weak var Add: UIButton!
+    @IBOutlet weak var gameIcon: UIImageView!
+    @IBOutlet weak var friendName: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

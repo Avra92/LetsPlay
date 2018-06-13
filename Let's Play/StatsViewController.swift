@@ -40,7 +40,7 @@ class StatsViewController: UIViewController, UITableViewDataSource, UITableViewD
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        let postString = "username=\(String(describing: uname!))&game=\(String(describing: Constants.gameDict[gamePass!]!))&nickname=\(String(describing: nickNamePass!))&platform=\(String(describing: platformPass!))&in_game_nick=\(String(describing: nickPass))"
+        let postString = "username=\(String(describing: uname!))&game=\(String(describing: Constants.gameDict[gamePass!]!))&nickname=\(String(describing: nickNamePass!))&platform=\(String(describing: platformPass!))"
         request.httpBody = postString.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error

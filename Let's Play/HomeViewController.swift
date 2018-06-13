@@ -123,6 +123,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.game.text = gameArray[indexPath.row]
         cell.nickname.text = nickArray[indexPath.row]
         cell.layer.cornerRadius = cell.frame.height/2
+        cell.share.tag = indexPath.row
+        cell.share.addTarget(self, action:#selector(Share(sender:)), for: .touchUpInside)
         return cell
     }
     
@@ -135,10 +137,21 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.navigationController?.pushViewController(statsController!, animated: true)
     }
     
+    @IBAction func Share(sender : UIButton){
+        let index = sender.tag
+        let shareController = storyboard?.instantiateViewController(withIdentifier: "ShareViewController") as? ShareViewController
+        let usrname = UserDefaults.standard.string(forKey: "username") as String!
+        shareController?.userName = usrname
+        shareController?.gameName = gameArray[index]
+        shareController?.searchValue = "%"
+        self.navigationController?.pushViewController(shareController!, animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 }
+
 
 

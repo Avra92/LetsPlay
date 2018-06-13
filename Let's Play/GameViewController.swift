@@ -239,22 +239,6 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
                     let message = (json!["message"] as? String)!
                     if (status == "s")
                     {
-                        if let statDetails = json?.value(forKey: "stats") as? NSArray {
-                            for statDetail in statDetails{
-                                if let statDetailDict = statDetail as? NSDictionary {
-                                    if let stat = statDetailDict.value(forKey: "key"){
-                                        self.statArray.append(stat as! String)
-                                    }
-                                    if let statValue = statDetailDict.value(forKey: "value"){
-                                        self.statValueArray.append(statValue as! String)
-                                    }
-                                }
-                            }
-                        }
-                        print(self.statArray)
-                        print(self.statValueArray)
-                        UserDefaults.standard.set(self.statArray, forKey: "statDetail")
-                        UserDefaults.standard.set(self.statValueArray, forKey: "statValue")
                         DispatchQueue.main.async(execute:{
                             let myAlert = UIAlertController(title: " ", message: "\(message)", preferredStyle: .alert)
                             let okAction = UIAlertAction(title: "Ok", style: .default) { action in
