@@ -348,15 +348,16 @@
                                     <constraint firstAttribute="width" secondItem="en4-vq-p2Y" secondAttribute="height" multiplier="2:1" id="TPy-IA-vpe"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="paH-9c-yL1">
-                                <rect key="frame" x="16" y="223.5" width="343" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="paH-9c-yL1">
+                                <rect key="frame" x="16" y="223.5" width="343" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6uB-i6-NjS">
-                                <rect key="frame" x="0.0" y="263.5" width="375" height="403.5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6uB-i6-NjS">
+                                <rect key="frame" x="0.0" y="239.5" width="375" height="427.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StatCell" rowHeight="71" id="R5X-Ei-245" customClass="StatViewCell" customModule="Let_s_Play" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="71"/>
@@ -400,7 +401,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="skL-zS-awD" firstAttribute="trailing" secondItem="paH-9c-yL1" secondAttribute="trailing" constant="16" id="5vx-sq-c1I"/>
                             <constraint firstItem="paH-9c-yL1" firstAttribute="top" secondItem="en4-vq-p2Y" secondAttribute="bottom" constant="16" id="7Ei-nW-JMw"/>
@@ -438,6 +439,9 @@
                                 <color key="backgroundColor" red="0.99215686270000003" green="0.94117647059999998" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Add Game"/>
+                                <connections>
+                                    <action selector="addGame:" destination="XNc-ZM-tD1" eventType="touchUpInside" id="c7I-xX-ekI"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4v5-nP-0rg">
                                 <rect key="frame" x="0.0" y="34" width="375" height="569"/>
@@ -507,7 +511,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="container" destination="T2l-44-X9h" id="ql0-Di-zHV"/>
+                                            <outlet property="container" destination="T2l-44-X9h" id="XPj-Ma-Ofz"/>
                                             <outlet property="game" destination="TkS-mc-x7U" id="bKP-0u-7Aq"/>
                                             <outlet property="nickname" destination="2Bg-oT-nlo" id="wQQ-w2-iSZ"/>
                                             <outlet property="play" destination="WPo-Pe-Qc9" id="RsP-xp-QQ0"/>

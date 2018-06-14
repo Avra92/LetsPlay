@@ -128,7 +128,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameCell") as! GameListCell
         cell.game.text = Constants.gameReverseDict[gameArray[indexPath.row]]
         cell.nickname.text = nickArray[indexPath.row]
-        cell.layer.cornerRadius = cell.frame.height/2
+        cell.container.layer.cornerRadius = 10
+        cell.container.layer.borderWidth = 2
+        cell.container.layer.borderColor = UIColor.white.cgColor
+        cell.backgroundColor = UIColor.clear
         cell.share.tag = indexPath.row
         cell.share.addTarget(self, action:#selector(Share(sender:)), for: .touchUpInside)
         cell.play.tag = indexPath.row
@@ -282,6 +285,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         task.resume()
         
+    }
+    
+    
+    @IBAction func addGame(_ sender: Any) {
     }
     
     @IBAction func friendList(_ sender: UIButton) {

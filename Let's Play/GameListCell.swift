@@ -14,6 +14,7 @@ class GameListCell: UITableViewCell {
     @IBOutlet weak var nickname: UILabel!
     @IBOutlet weak var share: UIButton!
     @IBOutlet weak var play: UIButton!
+    @IBOutlet weak var container: UIView!
     
     
     override func awakeFromNib() {

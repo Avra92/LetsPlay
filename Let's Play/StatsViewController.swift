@@ -120,7 +120,6 @@ class StatsViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "StatCell") as! StatViewCell
         cell.statDetail.text = statDetailArray[indexPath.row]
         cell.statValue.text = statValueArray[indexPath.row]
-        cell.layer.cornerRadius = cell.frame.height/2
         return cell
     }
 
