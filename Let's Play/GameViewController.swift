@@ -20,7 +20,7 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
     var statValueArray = [String]()
     
     // Creating Game List
-    let gameList =     [ "Counter Strike: Global Offensive","Fortnite","PlayerUnknown's Battlegrounds","Clash of Clans","Clash Royale","Dota 2","League of Legends"]
+    let gameList =     [ "Counter Strike: Global Offensive","Fortnite","Clash of Clans","Clash Royale"]
     var gameMenu     = UIPickerView()
     
     // Creating Platform List
@@ -37,8 +37,6 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
     var cocMenu = UIPickerView()
     
     
-    let pubgList = ["Xbox - Asia", "Xbox - Europe", "Xbox - North America", "Xbox - Oceania", "PC - Korea", "PC - Japan", "PC - North America", "PC - Europe", "PC - Russia", "PC - Oceania", "PC - Kakao", "PC - South East Asia", "PC - South and Central America", "PC - Asia"]
-    var pubgMenu = UIPickerView()
     
     
     override func viewDidLoad() {
@@ -83,10 +81,6 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
             {
                 return csgoList.count
             }
-            else if (game.text == "PlayerUnknown's Battlegrounds")
-            {
-                return pubgList.count
-            }
             else if (game.text == "Fortnite")
             {
                 return fortniteList.count
@@ -110,10 +104,6 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
             {
                 return csgoList[row]
             }
-            else if (game.text == "PlayerUnknown's Battlegrounds")
-            {
-                return pubgList[row]
-            }
             else if (game.text == "Fortnite")
             {
                 return fortniteList[row]
@@ -133,20 +123,12 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
             {
                 if (game.text == "Counter Strike: Global Offensive")
                 {
-                    infoText.text = Constants.infoDict["csdotaInfo"]
+                    infoText.text = Constants.infoDict["csInfo"]
                     csgoMenu.dataSource = self
                     csgoMenu.delegate = self
                     csgoMenu.backgroundColor = UIColor.gray
                     platform.inputView = csgoMenu
                     platform.placeholder = "Select the type of ID you are using"
-                }
-                if (game.text == "PlayerUnknown's Battlegrounds")
-                {
-                    pubgMenu.dataSource = self
-                    pubgMenu.delegate = self
-                    pubgMenu.backgroundColor = UIColor.gray
-                    platform.inputView = pubgMenu
-                    platform.placeholder = "Select the Platform and appropriate Region"
                 }
                 if (game.text == "Fortnite")
                 {
@@ -172,11 +154,6 @@ class GameViewController: UIViewController,UIPickerViewDelegate,UIPickerViewData
             if (game.text == "Counter Strike: Global Offensive")
             {
                 platform.text = csgoList[row]
-                platform.resignFirstResponder()
-            }
-            else if (game.text == "PlayerUnknown's Battlegrounds")
-            {
-                platform.text = pubgList[row]
                 platform.resignFirstResponder()
             }
             else if (game.text == "Fortnite")

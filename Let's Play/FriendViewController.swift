@@ -75,15 +75,21 @@ class FriendViewController: UIViewController, UITableViewDataSource, UITableView
                     if let userDetails = json?.value(forKey: "friends") as? NSArray {
                         for userDetail in userDetails{
                             if let userDetailDict = userDetail as? NSDictionary {
-                                let result = Result(game: "", name: "", username: "")
+                                let result = Result(game: "", name: "", username: "", nickname: "", platform: "")
                                 if let user = userDetailDict.value(forKey: "name"){
                                     result.name = user as! String
                                 }
-                                if let user = userDetailDict.value(forKey: "username"){
-                                    result.username = user as! String
+                                if let username = userDetailDict.value(forKey: "username"){
+                                    result.username = username as! String
                                 }
                                 if let game = userDetailDict.value(forKey: "game"){
                                     result.game = game as! String
+                                }
+                                if let nickname = userDetailDict.value(forKey: "nickname"){
+                                    result.nickname = nickname as! String
+                                }
+                                if let platform = userDetailDict.value(forKey: "platform"){
+                                    result.platform = platform as! String
                                 }
                                 self.userDetailArray.append(result)
                                 OperationQueue.main.addOperation({
@@ -140,6 +146,24 @@ class FriendViewController: UIViewController, UITableViewDataSource, UITableView
         }
         cell.layer.cornerRadius = cell.frame.height/2
         return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let statsController = storyboard?.instantiateViewController(withIdentifier: "StatsViewController") as? StatsViewController
+        if (isSearching){
+            statsController?.gamePass = filterUserArray[indexPath.row].game
+            statsController?.uname = filterUserArray[indexPath.row].username
+            statsController?.nickNamePass = filterUserArray[indexPath.row].nickname
+            statsController?.platformPass = filterUserArray[indexPath.row].platform
+        }
+        else{
+            statsController?.gamePass = userDetailArray[indexPath.row].game
+            statsController?.uname = userDetailArray[indexPath.row].username
+            statsController?.nickNamePass = userDetailArray[indexPath.row].nickname
+            statsController?.platformPass = userDetailArray[indexPath.row].platform
+        }
+        
+        self.navigationController?.pushViewController(statsController!, animated: true)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -235,10 +259,14 @@ class FriendViewController: UIViewController, UITableViewDataSource, UITableView
         var game: String
         var name:String
         var username:String
-        init(game:String,name:String,username:String) {
+        var nickname:String
+        var platform:String
+        init(game:String,name:String,username:String,nickname:String,platform:String) {
             self.game = game
             self.name = name
             self.username = username
+            self.nickname = nickname
+            self.platform = platform
         }
     }
 

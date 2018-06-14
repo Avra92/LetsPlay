@@ -15,10 +15,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var nickNameArray = [String]()
     var platformArray = [String]()
     var nickArray = [String]()
+    var uname:String?
+    var usrname:String?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        usrname = UserDefaults.standard.string(forKey: "username") as String!
         // Do any additional setup after loading the view.
     }
 
@@ -33,6 +36,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        gameListLoad()
+    }
+    
+    func gameListLoad(){
         gameArray = []
         nickNameArray = []
         platformArray = []
@@ -40,7 +47,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         tableView.delegate = self
         tableView.dataSource = self
-        let uname = UserDefaults.standard.string(forKey: "username") as String!
+        uname = UserDefaults.standard.string(forKey: "username") as String!
         let url = URL(string: "https://www.jak2018.freehosting.co.nz/api/getgameslist.php")!
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -74,8 +81,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         for gameDetail in gameDetails{
                             if let gameDetailDict = gameDetail as? NSDictionary {
                                 if let game = gameDetailDict.value(forKey: "game"){
-                                    let Game = Constants.gameReverseDict[game as! String]
-                                    self.gameArray.append(Game!)
+                                    self.gameArray.append(game as! String)
                                 }
                                 if let nickName = gameDetailDict.value(forKey: "nickname"){
                                     self.nickNameArray.append(nickName as! String)
@@ -120,7 +126,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameCell") as! GameListCell
-        cell.game.text = gameArray[indexPath.row]
+        cell.game.text = Constants.gameReverseDict[gameArray[indexPath.row]]
         cell.nickname.text = nickArray[indexPath.row]
         cell.layer.cornerRadius = cell.frame.height/2
         cell.share.tag = indexPath.row
@@ -130,19 +136,84 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete){
+            let game = Constants.gameDict[gameArray[indexPath.row]]
+            let nickname = nickNameArray[indexPath.row]
+            let platform = platformArray[indexPath.row]
+            let url = URL(string: "https://www.jak2018.freehosting.co.nz/api/removegame.php")!
+            var request = URLRequest(url: url)
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            let postString = "username=\(String(describing: uname!))&game=\(String(describing: game!))&nickname=\(String(describing: nickname))&platform=\(platform)"
+            print("Post String: \(postString)")
+            request.httpBody = postString.data(using: .utf8)
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                    print("error=\(String(describing: error))")
+                    return
+                }
+                
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                    print("response = \(String(describing: response))")
+                }
+                
+                let responseString = String(data: data, encoding: .utf8)
+                print("responseString = \(String(describing: responseString))")
+                print("postString = \(String(describing: postString))")
+                let Data = responseString?.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+                do
+                {
+                    let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? NSDictionary
+                    print("JSON Data : \(String(describing: json))")
+                    let status = (json!["status"] as? String)!
+                    let message = (json!["message"] as? String)!
+                    if (status == "s")
+                    {
+                        DispatchQueue.main.async(execute:{
+                            let myAlert = UIAlertController(title: " ", message: "\(message)", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "Ok", style: .default) { action in
+                            }
+                            myAlert.addAction(okAction)
+                            self.present(myAlert, animated: true, completion:nil)
+                            self.gameListLoad()
+                            return
+                        })
+                        
+                    }
+                    if (status == "e"){
+                        DispatchQueue.main.async(execute:{
+                            let myAlert = UIAlertController(title: "Alert", message: "\(message)", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "Ok", style: .default) { action in
+                            }
+                            myAlert.addAction(okAction)
+                            self.present(myAlert, animated: true, completion:nil)
+                            return
+                        })
+                    }
+                }
+                catch let error as NSError{
+                    print("Failed to load : \(error.localizedDescription)")
+                }
+            }
+            task.resume()
+            
+        }
+    }
+    
     public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let statsController = storyboard?.instantiateViewController(withIdentifier: "StatsViewController") as? StatsViewController
+        statsController?.uname = usrname
         statsController?.gamePass = gameArray[indexPath.row]
         statsController?.nickNamePass = nickNameArray[indexPath.row]
         statsController?.platformPass = platformArray[indexPath.row]
-        statsController?.nickPass = nickArray[indexPath.row]
         self.navigationController?.pushViewController(statsController!, animated: true)
     }
     
     @IBAction func Share(sender : UIButton){
         let index = sender.tag
         let shareController = storyboard?.instantiateViewController(withIdentifier: "ShareViewController") as? ShareViewController
-        let usrname = UserDefaults.standard.string(forKey: "username") as String!
         shareController?.userName = usrname
         shareController?.gameName = gameArray[index]
         shareController?.searchValue = "%"
@@ -153,12 +224,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let index = sender.tag
         
         let usrname = UserDefaults.standard.string(forKey: "username") as String!
-        let game = Constants.gameDict[gameArray[index]]
+        let game = gameArray[index]
         let url = URL(string: "https://www.jak2018.freehosting.co.nz/api/letsplay.php")!
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        let postString = "username=\(String(describing: usrname!))&game=\(String(describing: game!))"
+        let postString = "username=\(String(describing: usrname!))&game=\(String(describing: game))"
         request.httpBody = postString.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
