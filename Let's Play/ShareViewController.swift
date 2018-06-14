@@ -19,53 +19,48 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
     var userDetailArray = [Result]()
     var filterUserArray = [Result]()
     var isSearching = false
-    var frndName: String?
-    var gName: String?
 
+    var activityIndicator: UIActivityIndicatorView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator = UIActivityIndicatorView()
         //Setting the Search Bar
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.done
 
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
         userDetailArray = []
         tableView.delegate = self
         tableView.dataSource = self
-
+        showOrHideActivityIndicator(show: true)
         let postString = "username=\(String(describing: userName!))&game=\(String(describing: gameName!))&search=\(String(describing: searchValue!))"
         let request = Constants.createRequest(url: Constants.searchURL, postString: postString)
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else { // check for fundamental networking error
-                print("error=\(String(describing: error))")
+            DispatchQueue.main.async(execute: {
+                self.showOrHideActivityIndicator(show: false)
+            })
+
+            guard let data = data, error == nil else {
+                self.showError(message: Constants.error_internet)
                 return
             }
 
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 { // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(String(describing: response))")
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 { self.showError(message: Constants.error_server)
+                return
             }
 
             let responseString = String(data: data, encoding: .utf8)
-            print("responseString = \(String(describing: responseString))")
-            print("postString = \(String(describing: postString))")
             let Data = responseString?.data(using: String.Encoding.utf8, allowLossyConversion: false)!
             do {
                 let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? NSDictionary
-                print("JSON Data : \(String(describing: json))")
                 let status = (json!["status"] as? String)!
                 let message = (json!["message"] as? String)!
                 if (status == "s") {
                     if let userDetails = json?.value(forKey: "results") as? NSArray {
                         for userDetail in userDetails {
                             if let userDetailDict = userDetail as? NSDictionary {
-                                let result = Result(game: "", in_game_name: "", is_friend: false, name: "", username: "")
+                                var result = Result(game: "", in_game_name: "", is_friend: false, name: "", username: "")
                                 if let user = userDetailDict.value(forKey: "in_game_name") {
                                     result.in_game_name = user as! String
                                 }
@@ -87,20 +82,38 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
                                 })
                             }
                         }
+                    } else {
+                        self.showError(message: Constants.error_general)
                     }
-                    print(self.userDetailArray)
+                } else {
+                    self.showError(message: message)
                 }
-                if (status == "e") {
-                    DispatchQueue.main.async(execute: {
-                        self.present(Constants.createAlert(title: "Error", message: message), animated: true, completion: nil)
-                    })
-                }
-            } catch let error as NSError {
-                print("Failed to load : \(error.localizedDescription)")
+            } catch _ as NSError {
+                self.showError(message: Constants.error_internet)
             }
         }
         task.resume()
 
+    }
+
+    func showError(message: String) {
+        DispatchQueue.main.async(execute: {
+            self.present(Constants.createAlert(title: "Error", message: message), animated: true, completion: nil)
+        })
+    }
+
+    func showOrHideActivityIndicator(show: Bool) {
+        if (show) {
+            activityIndicator?.center = self.view.center
+            activityIndicator?.hidesWhenStopped = true
+            activityIndicator?.activityIndicatorViewStyle = .whiteLarge
+            view.addSubview(activityIndicator!)
+            UIApplication.shared.beginIgnoringInteractionEvents()
+            activityIndicator?.startAnimating()
+        } else {
+            UIApplication.shared.endIgnoringInteractionEvents()
+            activityIndicator?.stopAnimating()
+        }
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -120,77 +133,87 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShareCell") as! ShareViewCell
         if (isSearching) {
-            cell.gameIcon.image = UIImage(named: Constants.gameReverseDict[filterUserArray[indexPath.row].game]!)
-            cell.friendUserName.text = filterUserArray[indexPath.row].username
-            cell.f_inGameName.text = filterUserArray[indexPath.row].in_game_name
-            cell.friendName.text = filterUserArray[indexPath.row].name
-            cell.Add.isHidden = filterUserArray[indexPath.row].is_friend
+            cell.img_gameIcon.image = UIImage(named: Constants.gameReverseDict[filterUserArray[indexPath.row].game]!)
+            cell.lbl_username.text = filterUserArray[indexPath.row].username
+            cell.lbl_inGameName.text = filterUserArray[indexPath.row].in_game_name
+            cell.lbl_name.text = filterUserArray[indexPath.row].name
+            cell.btn_add.isHidden = filterUserArray[indexPath.row].is_friend
         } else {
-            cell.gameIcon.image = UIImage(named: Constants.gameReverseDict[userDetailArray[indexPath.row].game]!)
-            cell.friendUserName.text = userDetailArray[indexPath.row].username
-            cell.f_inGameName.text = userDetailArray[indexPath.row].in_game_name
-            cell.friendName.text = userDetailArray[indexPath.row].name
-            cell.Add.isHidden = userDetailArray[indexPath.row].is_friend
+            cell.img_gameIcon.image = UIImage(named: Constants.gameReverseDict[userDetailArray[indexPath.row].game]!)
+            cell.lbl_username.text = userDetailArray[indexPath.row].username
+            cell.lbl_inGameName.text = userDetailArray[indexPath.row].in_game_name
+            cell.lbl_name.text = userDetailArray[indexPath.row].name
+            cell.btn_add.isHidden = userDetailArray[indexPath.row].is_friend
         }
-        cell.Add.tag = indexPath.row
-        cell.Add.addTarget(self, action: #selector(add(sender:)), for: .touchUpInside)
-        cell.container.layer.cornerRadius = 10
-        cell.container.layer.borderWidth = 2
-        cell.container.layer.borderColor = UIColor.white.cgColor
+        cell.btn_add.tag = indexPath.row
+        cell.btn_add.addTarget(self, action: #selector(didTapAdd(sender:)), for: .touchUpInside)
+        cell.view_container.layer.cornerRadius = 10
+        cell.view_container.layer.borderWidth = 2
+        cell.view_container.layer.borderColor = UIColor.white.cgColor
         cell.backgroundColor = UIColor.clear
         return cell
     }
 
-    @IBAction func add(sender: UIButton) {
+    @IBAction func didTapAdd(sender: UIButton) {
         let index = sender.tag
+        var f_username: String?
+        var game: String?
         if (isSearching) {
-            frndName = filterUserArray[index].username
-            gName = filterUserArray[index].game
+            f_username = filterUserArray[index].username
+            game = filterUserArray[index].game
         } else {
-            frndName = userDetailArray[index].username
-            gName = userDetailArray[index].game
+            f_username = userDetailArray[index].username
+            game = userDetailArray[index].game
         }
 
-        let postString = "username=\(String(describing: userName!))&game=\(String(describing: gName!))&f_username=\(String(describing: frndName!))"
+        let alert = UIAlertController(title: "Add friend", message: "Are you sure you want to add this user as friend?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { action in
+            self.addFriend(game: game!, f_username: f_username!)
+        }
+        let noAction = UIAlertAction(title: "No", style: .cancel) { action in
+        }
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func addFriend(game: String, f_username: String) {
+        showOrHideActivityIndicator(show: true)
+        let postString = "username=\(String(describing: userName!))&game=\(String(describing: game))&f_username=\(String(describing: f_username))"
         let request = Constants.createRequest(url: Constants.addFriendURL, postString: postString)
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else { // check for fundamental networking error
-                print("error=\(String(describing: error))")
+            DispatchQueue.main.async(execute: {
+                self.showOrHideActivityIndicator(show: false)
+            })
+            guard let data = data, error == nil else {
+                self.showError(message: Constants.error_internet)
                 return
             }
 
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 { // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(String(describing: response))")
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 { self.showError(message: Constants.error_server)
+                return
             }
 
             let responseString = String(data: data, encoding: .utf8)
-            print("responseString = \(String(describing: responseString))")
-            print("postString = \(String(describing: postString))")
             let Data = responseString?.data(using: String.Encoding.utf8, allowLossyConversion: false)!
             do {
                 let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? NSDictionary
-                print("JSON Data : \(String(describing: json))")
                 let status = (json!["status"] as? String)!
                 let message = (json!["message"] as? String)!
-                if (status == "s") {
-                    DispatchQueue.main.async(execute: {
+                DispatchQueue.main.async(execute: {
+                    if (status == "s") {
                         self.present(Constants.createAlert(title: "Success", message: message), animated: true, completion: nil)
-                    })
-                }
-                if (status == "e") {
-                    DispatchQueue.main.async(execute: {
+                    } else {
                         self.present(Constants.createAlert(title: "Error", message: message), animated: true, completion: nil)
-                    })
-                }
-            } catch let error as NSError {
-                print("Failed to load : \(error.localizedDescription)")
+                    }
+                })
+            } catch _ as NSError {
+                self.showError(message: Constants.error_general)
             }
         }
         task.resume()
     }
-
 
     //Function for filtering the table view cells based on what the user types in search bar
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -210,18 +233,11 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
         // Dispose of any resources that can be recreated.
     }
 
-    class Result {
+    struct Result {
         var game: String
         var in_game_name: String
         var is_friend: Bool
         var name: String
         var username: String
-        init(game: String, in_game_name: String, is_friend: Bool, name: String, username: String) {
-            self.game = game
-            self.in_game_name = in_game_name
-            self.is_friend = is_friend
-            self.name = name
-            self.username = username
-        }
     }
 }

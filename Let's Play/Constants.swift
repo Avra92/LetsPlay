@@ -30,6 +30,10 @@ class Constants {
     static let searchURL = baseURL + "search.php"
     static let addFriendURL = baseURL + "addfriend.php"
     static let forgotPasswordURL = baseURL + "forgotpassword.php"
+    
+    static let error_internet = "Internet issue. Please try again"
+    static let error_server = "Server issue. Please try again"
+    static let error_general = "An error occurred. Please try again"
 
     static func createRequest(url: String, postString: String) -> URLRequest {
         var request = URLRequest(url: URL(string: url)!)

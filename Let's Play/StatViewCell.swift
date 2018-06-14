@@ -10,18 +10,11 @@ import UIKit
 
 class StatViewCell: UITableViewCell {
 
-    @IBOutlet weak var statDetail: UILabel!
-    @IBOutlet weak var statValue: UILabel!
-    
+    @IBOutlet weak var txt_statName: UILabel!
+    @IBOutlet weak var txt_statValue: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

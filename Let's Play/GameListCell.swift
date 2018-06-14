@@ -9,23 +9,16 @@
 import UIKit
 
 class GameListCell: UITableViewCell {
-    
-    @IBOutlet weak var game: UILabel!
-    @IBOutlet weak var nickname: UILabel!
-    @IBOutlet weak var share: UIButton!
-    @IBOutlet weak var play: UIButton!
-    @IBOutlet weak var container: UIView!
-    
-    
+
+    @IBOutlet weak var lbl_game: UILabel!
+    @IBOutlet weak var lbl_nickname: UILabel!
+    @IBOutlet weak var btn_addFriends: UIButton!
+    @IBOutlet weak var btn_letsPlay: UIButton!
+    @IBOutlet weak var view_container: UIView!
+
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    //override func setSelected(_ selected: Bool, animated: Bool) {
-     //   super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    //}
-
 }

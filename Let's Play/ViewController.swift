@@ -10,12 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var username: UITextField!
-    @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var txt_username: UITextField!
+    @IBOutlet weak var txt_password: UITextField!
+    var activityIndicator: UIActivityIndicatorView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        activityIndicator = UIActivityIndicatorView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -23,57 +24,86 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func Login(_ sender: UIButton) {
-        let uname = username.text
-        let pass = password.text
+    func showError(message: String) {
+        DispatchQueue.main.async(execute: {
+            self.present(Constants.createAlert(title: "Error", message: message), animated: true, completion: nil)
+        })
+    }
+
+    func showOrHideActivityIndicator(show: Bool) {
+        if (show) {
+            activityIndicator?.center = self.view.center
+            activityIndicator?.hidesWhenStopped = true
+            activityIndicator?.activityIndicatorViewStyle = .whiteLarge
+            view.addSubview(activityIndicator!)
+            UIApplication.shared.beginIgnoringInteractionEvents()
+            activityIndicator?.startAnimating()
+        } else {
+            UIApplication.shared.endIgnoringInteractionEvents()
+            activityIndicator?.stopAnimating()
+        }
+    }
+
+    @IBAction func didTapLogin(_ sender: UIButton) {
+        let uname = txt_username.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let pass = txt_password.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if (uname!.isEmpty) {
+            self.present(Constants.createAlert(title: "Error", message: "Please enter your username"), animated: true, completion: nil)
+            return
+        }
+
+        if (pass!.isEmpty) {
+            self.present(Constants.createAlert(title: "Error", message: "Please enter your password"), animated: true, completion: nil)
+            return
+        }
+        showOrHideActivityIndicator(show: true)
         let postString = "username=\(String(describing: uname!))&password=\(String(describing: pass!))&device=ios"
 
         let request = Constants.createRequest(url: Constants.loginURL, postString: postString)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else { // check for fundamental networking error
-                print("error=\(String(describing: error))")
+            DispatchQueue.main.async(execute: {
+                self.showOrHideActivityIndicator(show: false)
+            })
+
+            guard let data = data, error == nil else {
+                self.showError(message: Constants.error_internet)
                 return
             }
 
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 { // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(String(describing: response))")
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 { self.showError(message: Constants.error_server)
+                return
             }
 
             let responseString = String(data: data, encoding: .utf8)
-            print("responseString = \(String(describing: responseString))")
             let Data = responseString?.data(using: String.Encoding.utf8, allowLossyConversion: false)!
             do {
                 let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? [String: Any]
-                print("JSON Data : \(String(describing: json))")
                 let status = (json!["status"] as? String)!
                 let message = (json!["message"] as? String)!
-                if (status == "s") {
-                    DispatchQueue.main.async(execute: {
+                DispatchQueue.main.async(execute: {
+                    if (status == "s") {
                         UserDefaults.standard.set("\(String(describing: uname!))", forKey: "username")
                         let homeController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController
                         self.navigationController?.pushViewController(homeController!, animated: true)
-                    })
-                }
-                if (status == "e") {
-                    DispatchQueue.main.async(execute: {
+                    } else {
                         self.present(Constants.createAlert(title: "Error", message: message), animated: true, completion: nil)
-                    })
-                }
-            } catch let error as NSError {
-                print("Failed to load : \(error.localizedDescription)")
+                    }
+                })
+            } catch _ as NSError {
+                self.showError(message: Constants.error_general)
             }
         }
         task.resume()
     }
 
-    @IBAction func register(_ sender: UIButton) {
+    @IBAction func didTapRegister(_ sender: UIButton) {
         let registerController = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewController") as? RegisterViewController
         self.navigationController?.pushViewController(registerController!, animated: true)
     }
 
 
-    @IBAction func forgotPassword(_ sender: UIButton) {
+    @IBAction func didTapForgotPassword(_ sender: UIButton) {
         let forgotPassController = self.storyboard?.instantiateViewController(withIdentifier: "ForgotPassViewController") as? ForgotPassViewController
         self.navigationController?.pushViewController(forgotPassController!, animated: true)
     }

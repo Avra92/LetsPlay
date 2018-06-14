@@ -10,20 +10,13 @@ import UIKit
 
 class FriendViewCell: UITableViewCell {
 
-    @IBOutlet weak var gameIcon: UIImageView!
-    @IBOutlet weak var friendName: UILabel!
-    @IBOutlet weak var f_userName: UILabel!
-    @IBOutlet weak var container: UIView!
-    
+    @IBOutlet weak var img_gameIcon: UIImageView!
+    @IBOutlet weak var lbl_name: UILabel!
+    @IBOutlet weak var lbl_username: UILabel!
+    @IBOutlet weak var view_container: UIView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

@@ -10,23 +10,16 @@ import UIKit
 
 class ShareViewCell: UITableViewCell {
 
-    @IBOutlet weak var Add: UIButton!
-    @IBOutlet weak var gameIcon: UIImageView!
-    @IBOutlet weak var friendName: UILabel!
-    @IBOutlet weak var friendUserName: UILabel!
-    @IBOutlet weak var f_inGameName: UILabel!
-    @IBOutlet weak var container: UIView!
-    
-    
+    @IBOutlet weak var btn_add: UIButton!
+    @IBOutlet weak var img_gameIcon: UIImageView!
+    @IBOutlet weak var lbl_name: UILabel!
+    @IBOutlet weak var lbl_username: UILabel!
+    @IBOutlet weak var lbl_inGameName: UILabel!
+    @IBOutlet weak var view_container: UIView!
+
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

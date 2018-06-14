@@ -26,7 +26,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Register"/>
                                 <connections>
-                                    <action selector="register:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Lq-pD-EcZ"/>
+                                    <action selector="didTapRegister:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nnk-or-H8l"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Oz-P9-Mjq">
@@ -47,7 +47,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
-                                    <action selector="Login:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h1A-hS-rl2"/>
+                                    <action selector="didTapLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1O9-km-dGT"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i8B-wv-mBD">
@@ -55,7 +55,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Forgot Password?"/>
                                 <connections>
-                                    <action selector="forgotPassword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ugw-EF-VzL"/>
+                                    <action selector="didTapForgotPassword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N96-X9-eaV"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -82,8 +82,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="NWn-w8-Fyh"/>
                     <connections>
-                        <outlet property="password" destination="4nz-y1-bFg" id="8wU-E1-ci8"/>
-                        <outlet property="username" destination="3Oz-P9-Mjq" id="HHy-FN-Rva"/>
+                        <outlet property="txt_password" destination="4nz-y1-bFg" id="MAB-CN-jbW"/>
+                        <outlet property="txt_username" destination="3Oz-P9-Mjq" id="J62-3O-WgB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -98,7 +98,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please provide your registered username?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9w-E3-mzR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please provide your registered username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9w-E3-mzR">
                                 <rect key="frame" x="16" y="291" width="343" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -117,7 +117,7 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
-                                    <action selector="Submit:" destination="w50-PX-4EL" eventType="touchUpInside" id="67k-iA-Fcu"/>
+                                    <action selector="didTapSubmit:" destination="w50-PX-4EL" eventType="touchUpInside" id="Ssb-rM-yZk"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -137,7 +137,7 @@
                         <viewLayoutGuide key="safeArea" id="Jbt-xC-4o4"/>
                     </view>
                     <connections>
-                        <outlet property="username" destination="qi8-uZ-1Gb" id="XQv-Hf-jqH"/>
+                        <outlet property="txt_username" destination="qi8-uZ-1Gb" id="ju1-8a-Exe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h7P-eg-QjQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -152,7 +152,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please select the game you want to add?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MTP-9w-Qdq">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please select the game you want to add" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MTP-9w-Qdq">
                                 <rect key="frame" x="16" y="36" width="343" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -164,10 +164,10 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <action selector="GameSelect:" destination="Sex-SI-5UC" eventType="touchDown" id="kBn-Ft-iq6"/>
+                                    <action selector="didTapGame:" destination="Sex-SI-5UC" eventType="touchDown" id="PQU-PZ-CPg"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please fill your Game ID and Platform?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BQT-tH-1Hq">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please fill your Game ID and Platform" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BQT-tH-1Hq">
                                 <rect key="frame" x="16" y="119.5" width="343" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -185,7 +185,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <action selector="PlatformSelect:" destination="Sex-SI-5UC" eventType="touchDown" id="ZuN-S8-NQl"/>
+                                    <action selector="didTapPlatform:" destination="Sex-SI-5UC" eventType="touchDown" id="mPz-hw-UyC"/>
                                 </connections>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BvT-AV-u2W">
@@ -203,7 +203,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="addGame:" destination="Sex-SI-5UC" eventType="touchUpInside" id="YXk-TL-OXb"/>
+                                    <action selector="didTapAddGame:" destination="Sex-SI-5UC" eventType="touchUpInside" id="bkR-m6-t6r"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -235,11 +235,10 @@
                         <viewLayoutGuide key="safeArea" id="tMZ-8W-aaJ"/>
                     </view>
                     <connections>
-                        <outlet property="details" destination="BQT-tH-1Hq" id="uHS-3k-i18"/>
-                        <outlet property="game" destination="wUM-zG-sdI" id="Awb-WN-sLE"/>
-                        <outlet property="gameId" destination="7Zq-Ta-MgC" id="2Qb-e1-8r6"/>
-                        <outlet property="infoText" destination="BvT-AV-u2W" id="On3-gd-ZbA"/>
-                        <outlet property="platform" destination="JkM-Qa-buE" id="AzI-Hy-0Sc"/>
+                        <outlet property="txt_game" destination="wUM-zG-sdI" id="2cE-xN-Uad"/>
+                        <outlet property="txt_gameId" destination="7Zq-Ta-MgC" id="pFW-Us-qPz"/>
+                        <outlet property="txt_infoText" destination="BvT-AV-u2W" id="dLs-3X-3M3"/>
+                        <outlet property="txt_platform" destination="JkM-Qa-buE" id="xbu-gV-srj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q3s-Tw-aOM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -330,12 +329,12 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="Add" destination="Qqu-lA-qKb" id="c6r-Fs-hCt"/>
-                                            <outlet property="container" destination="NmL-bO-Kft" id="Z2W-97-se0"/>
-                                            <outlet property="f_inGameName" destination="agI-ly-Op7" id="Gxb-3j-DJk"/>
-                                            <outlet property="friendName" destination="dPA-xz-SI2" id="7ri-vI-AAP"/>
-                                            <outlet property="friendUserName" destination="CdY-B7-KWQ" id="RTq-BV-5Ce"/>
-                                            <outlet property="gameIcon" destination="gRC-sE-KcM" id="4fB-i3-3uT"/>
+                                            <outlet property="btn_add" destination="Qqu-lA-qKb" id="Hnh-1l-bSt"/>
+                                            <outlet property="img_gameIcon" destination="gRC-sE-KcM" id="PM3-ui-1kz"/>
+                                            <outlet property="lbl_inGameName" destination="agI-ly-Op7" id="vU0-uu-xZ3"/>
+                                            <outlet property="lbl_name" destination="dPA-xz-SI2" id="1lY-pX-j8r"/>
+                                            <outlet property="lbl_username" destination="CdY-B7-KWQ" id="6SA-ze-bOT"/>
+                                            <outlet property="view_container" destination="NmL-bO-Kft" id="Gmy-ue-aS3"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -427,8 +426,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="statDetail" destination="yDd-7I-hwl" id="zl9-dZ-Zf0"/>
-                                            <outlet property="statValue" destination="cyh-k2-D6Z" id="MFw-4E-DtU"/>
+                                            <outlet property="txt_statName" destination="yDd-7I-hwl" id="3Zi-iO-YNp"/>
+                                            <outlet property="txt_statValue" destination="cyh-k2-D6Z" id="DpD-yw-Kmn"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -450,8 +449,8 @@
                         <viewLayoutGuide key="safeArea" id="skL-zS-awD"/>
                     </view>
                     <connections>
-                        <outlet property="gameIcon" destination="en4-vq-p2Y" id="amp-Sz-Hj2"/>
-                        <outlet property="gameNick" destination="paH-9c-yL1" id="lFW-e1-fXc"/>
+                        <outlet property="img_gameIcon" destination="en4-vq-p2Y" id="v9s-aF-p2K"/>
+                        <outlet property="lbl_gameNick" destination="paH-9c-yL1" id="eyB-Xv-d7z"/>
                         <outlet property="tableView" destination="6uB-i6-NjS" id="PaL-Yx-Zyg"/>
                     </connections>
                 </viewController>
@@ -473,7 +472,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Add Game"/>
                                 <connections>
-                                    <action selector="addGame:" destination="XNc-ZM-tD1" eventType="touchUpInside" id="c7I-xX-ekI"/>
+                                    <action selector="didTapAddGame:" destination="XNc-ZM-tD1" eventType="touchUpInside" id="nAM-HL-GS2"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4v5-nP-0rg">
@@ -544,11 +543,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="container" destination="T2l-44-X9h" id="XPj-Ma-Ofz"/>
-                                            <outlet property="game" destination="TkS-mc-x7U" id="bKP-0u-7Aq"/>
-                                            <outlet property="nickname" destination="2Bg-oT-nlo" id="wQQ-w2-iSZ"/>
-                                            <outlet property="play" destination="WPo-Pe-Qc9" id="RsP-xp-QQ0"/>
-                                            <outlet property="share" destination="mzG-jK-IHl" id="7oH-B4-aUL"/>
+                                            <outlet property="btn_addFriends" destination="mzG-jK-IHl" id="wlZ-tn-dIm"/>
+                                            <outlet property="btn_letsPlay" destination="WPo-Pe-Qc9" id="gq1-qO-cLH"/>
+                                            <outlet property="lbl_game" destination="TkS-mc-x7U" id="WSs-vV-9FZ"/>
+                                            <outlet property="lbl_nickname" destination="2Bg-oT-nlo" id="eFo-dc-lVB"/>
+                                            <outlet property="view_container" destination="T2l-44-X9h" id="bN8-iS-fhW"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -560,7 +559,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Friends"/>
                                 <connections>
-                                    <action selector="friendList:" destination="XNc-ZM-tD1" eventType="touchUpInside" id="vHM-KB-piV"/>
+                                    <action selector="didTapFriendsList:" destination="XNc-ZM-tD1" eventType="touchUpInside" id="sbF-To-HgT"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -655,10 +654,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="container" destination="WG3-cP-TTY" id="gzh-lC-pWA"/>
-                                            <outlet property="f_userName" destination="yTx-RI-T3S" id="Ctj-87-rZc"/>
-                                            <outlet property="friendName" destination="UrV-FO-nXC" id="ZAp-Cb-sGl"/>
-                                            <outlet property="gameIcon" destination="2rl-JP-FjN" id="jzS-zE-s9l"/>
+                                            <outlet property="img_gameIcon" destination="2rl-JP-FjN" id="FDl-xj-8xR"/>
+                                            <outlet property="lbl_name" destination="UrV-FO-nXC" id="TaL-Ng-CC9"/>
+                                            <outlet property="lbl_username" destination="yTx-RI-T3S" id="tdv-tB-fl7"/>
+                                            <outlet property="view_container" destination="WG3-cP-TTY" id="ZVf-ep-1IH"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -735,7 +734,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Register"/>
                                 <connections>
-                                    <action selector="Register:" destination="TR8-EX-F5C" eventType="touchUpInside" id="9Fe-AZ-EpS"/>
+                                    <action selector="didTapRegister:" destination="TR8-EX-F5C" eventType="touchUpInside" id="k8n-Ft-x9Y"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -767,12 +766,12 @@
                         <viewLayoutGuide key="safeArea" id="2OY-dU-Cmx"/>
                     </view>
                     <connections>
-                        <outlet property="confirmPass" destination="iuv-nb-FcC" id="bpY-Y8-NQw"/>
-                        <outlet property="email" destination="JKE-Lg-tBb" id="YAw-dU-Izq"/>
-                        <outlet property="fullName" destination="2WL-h8-Zfa" id="WMg-kD-VyQ"/>
-                        <outlet property="gender" destination="qy9-9n-LYv" id="PzW-l2-7wA"/>
-                        <outlet property="password" destination="SRM-Jp-JvW" id="EzK-wQ-fMa"/>
-                        <outlet property="username" destination="iuH-t0-Dyn" id="Qfk-jm-ahF"/>
+                        <outlet property="txt_confirmPass" destination="iuv-nb-FcC" id="FCO-xI-Cmh"/>
+                        <outlet property="txt_email" destination="JKE-Lg-tBb" id="N76-wp-b0f"/>
+                        <outlet property="txt_fullName" destination="2WL-h8-Zfa" id="sDe-oi-7IK"/>
+                        <outlet property="txt_gender" destination="qy9-9n-LYv" id="fAL-kn-464"/>
+                        <outlet property="txt_password" destination="SRM-Jp-JvW" id="Bjh-hp-m99"/>
+                        <outlet property="txt_username" destination="iuH-t0-Dyn" id="ZBE-HY-ZwO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qau-Uo-NeQ" userLabel="First Responder" sceneMemberID="firstResponder"/>

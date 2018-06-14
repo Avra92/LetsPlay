@@ -10,14 +10,14 @@ import UIKit
 
 class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    @IBOutlet weak var game: UITextField!
-    @IBOutlet weak var details: UILabel!
-    @IBOutlet weak var gameId: UITextField!
-    @IBOutlet weak var platform: UITextField!
-    @IBOutlet weak var infoText: UITextView!
+    @IBOutlet weak var txt_game: UITextField!
+    @IBOutlet weak var txt_gameId: UITextField!
+    @IBOutlet weak var txt_platform: UITextField!
+    @IBOutlet weak var txt_infoText: UITextView!
     var selectedField = 0
     var statArray = [String]()
     var statValueArray = [String]()
+    var activityIndicator: UIActivityIndicatorView?
 
     // Creating Game List
     let gameList = ["Counter Strike: Global Offensive", "Fortnite", "Clash of Clans", "Clash Royale"]
@@ -36,30 +36,44 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let cocList = ["Android", "iOS"]
     var cocMenu = UIPickerView()
 
-
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        activityIndicator = UIActivityIndicatorView()
         // Setting up the Picker View List for Games and Platforms
         gameMenu.dataSource = self
         gameMenu.delegate = self
         gameMenu.backgroundColor = UIColor.gray
-        game.inputView = gameMenu
-        game.placeholder = "Select Game you want to add"
-
-
-        // Do any additional setup after loading the view.
+        txt_game.inputView = gameMenu
+        txt_game.placeholder = "Select Game you want to add"
     }
 
-    @IBAction func GameSelect(_ sender: Any) {
+    func showError(message: String) {
+        DispatchQueue.main.async(execute: {
+            self.present(Constants.createAlert(title: "Error", message: message), animated: true, completion: nil)
+        })
+    }
+
+    func showOrHideActivityIndicator(show: Bool) {
+        if (show) {
+            activityIndicator?.center = self.view.center
+            activityIndicator?.hidesWhenStopped = true
+            activityIndicator?.activityIndicatorViewStyle = .whiteLarge
+            view.addSubview(activityIndicator!)
+            UIApplication.shared.beginIgnoringInteractionEvents()
+            activityIndicator?.startAnimating()
+        } else {
+            UIApplication.shared.endIgnoringInteractionEvents()
+            activityIndicator?.stopAnimating()
+        }
+    }
+
+    @IBAction func didTapGame(_ sender: Any) {
         let field = sender as! UITextField
         selectedField = field.tag
-        platform.text = " "
+        txt_platform.text = ""
     }
 
-    @IBAction func PlatformSelect(_ sender: Any) {
+    @IBAction func didTapPlatform(_ sender: Any) {
         let field = sender as! UITextField
         selectedField = field.tag
     }
@@ -74,9 +88,9 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         if (selectedField == 1) {
             return gameList.count
         } else {
-            if (game.text == "Counter Strike: Global Offensive") {
+            if (txt_game.text == "Counter Strike: Global Offensive") {
                 return csgoList.count
-            } else if (game.text == "Fortnite") {
+            } else if (txt_game.text == "Fortnite") {
                 return fortniteList.count
             } else {
                 return cocList.count
@@ -88,9 +102,9 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         if (selectedField == 1) {
             return gameList[row]
         } else {
-            if (game.text == "Counter Strike: Global Offensive") {
+            if (txt_game.text == "Counter Strike: Global Offensive") {
                 return csgoList[row]
-            } else if (game.text == "Fortnite") {
+            } else if (txt_game.text == "Fortnite") {
                 return fortniteList[row]
             } else {
                 return cocList[row]
@@ -100,96 +114,92 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if (selectedField == 1) {
-            game.text = gameList[row]
-            game.resignFirstResponder()
-            if (game.text?.isEmpty == false) {
-                if (game.text == "Counter Strike: Global Offensive") {
-                    infoText.text = Constants.infoDict["csInfo"]
+            txt_game.text = gameList[row]
+            txt_game.resignFirstResponder()
+            if (txt_game.text?.isEmpty == false) {
+                if (txt_game.text == "Counter Strike: Global Offensive") {
+                    txt_infoText.text = Constants.infoDict["csInfo"]
                     csgoMenu.dataSource = self
                     csgoMenu.delegate = self
                     csgoMenu.backgroundColor = UIColor.gray
-                    platform.inputView = csgoMenu
-                    platform.placeholder = "Select the type of ID you are using"
+                    txt_platform.inputView = csgoMenu
+                    txt_platform.placeholder = "Select the type of ID you are using"
                 }
-                if (game.text == "Fortnite") {
+                if (txt_game.text == "Fortnite") {
                     fortniteMenu.dataSource = self
                     fortniteMenu.delegate = self
                     fortniteMenu.backgroundColor = UIColor.gray
-                    platform.inputView = fortniteMenu
-                    platform.placeholder = "Select the Platform"
+                    txt_platform.inputView = fortniteMenu
+                    txt_platform.placeholder = "Select the Platform"
                 }
-                if ((game.text == "Clash of Clans") || (game.text == "Clash Royale")) {
-                    infoText.text = Constants.infoDict["coccrInfo"]
+                if ((txt_game.text == "Clash of Clans") || (txt_game.text == "Clash Royale")) {
+                    txt_infoText.text = Constants.infoDict["coccrInfo"]
                     cocMenu.dataSource = self
                     cocMenu.delegate = self
                     cocMenu.backgroundColor = UIColor.gray
-                    platform.inputView = cocMenu
-                    platform.placeholder = "Select the Platform"
+                    txt_platform.inputView = cocMenu
+                    txt_platform.placeholder = "Select the Platform"
                 }
             }
         } else {
-            if (game.text == "Counter Strike: Global Offensive") {
-                platform.text = csgoList[row]
-                platform.resignFirstResponder()
-            } else if (game.text == "Fortnite") {
-                platform.text = fortniteList[row]
-                platform.resignFirstResponder()
+            if (txt_game.text == "Counter Strike: Global Offensive") {
+                txt_platform.text = csgoList[row]
+            } else if (txt_game.text == "Fortnite") {
+                txt_platform.text = fortniteList[row]
             } else {
-                platform.text = cocList[row]
-                platform.resignFirstResponder()
+                txt_platform.text = cocList[row]
             }
+            txt_platform.resignFirstResponder()
         }
     }
 
-    @IBAction func addGame(_ sender: UIButton) {
-        let Game = game.text
-        let GameId = gameId.text
-        let Platform = platform.text
+    @IBAction func didTapAddGame(_ sender: UIButton) {
+        let game = txt_game.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let gameId = txt_gameId.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let platform = txt_platform.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         statArray = []
         statValueArray = []
 
         let uname = UserDefaults.standard.string(forKey: "username") as String!
 
-        if ((Game?.isEmpty)! || (GameId?.isEmpty)! || (Platform?.isEmpty)!) {
+        if (game!.isEmpty || gameId!.isEmpty || platform!.isEmpty) {
             self.present(Constants.createAlert(title: "Error", message: "Please fill all the fields"), animated: true, completion: nil)
-            return
-        }
-        else {
-            let postString = "username=\(String(describing: uname!))&game=\(String(describing: Constants.gameDict[Game!]!))&nickname=\(String(describing: GameId!))&platform=\(String(describing: Constants.platDict[Platform!]!))"
+        } else {
+            showOrHideActivityIndicator(show: true)
+            let postString = "username=\(String(describing: uname!))&game=\(String(describing: Constants.gameDict[game!]!))&nickname=\(String(describing: gameId!))&platform=\(String(describing: Constants.platDict[platform!]!))"
             let request = Constants.createRequest(url: Constants.addGameURL, postString: postString)
 
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                guard let data = data, error == nil else { // check for fundamental networking error
-                    print("error=\(String(describing: error))")
+                DispatchQueue.main.async(execute: {
+                    self.showOrHideActivityIndicator(show: false)
+                })
+
+                guard let data = data, error == nil else {
+                    self.showError(message: Constants.error_internet)
                     return
                 }
 
-                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 { // check for http errors
-                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                    print("response = \(String(describing: response))")
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                    self.showError(message: Constants.error_server)
+                    return
                 }
 
                 let responseString = String(data: data, encoding: .utf8)
-                print("responseString = \(String(describing: responseString))")
-                print("postString = \(String(describing: postString))")
                 let Data = responseString?.data(using: String.Encoding.utf8, allowLossyConversion: false)!
                 do {
                     let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? NSDictionary
-                    print("JSON Data : \(String(describing: json))")
                     let status = (json!["status"] as? String)!
                     let message = (json!["message"] as? String)!
-                    if (status == "s") {
-                        DispatchQueue.main.async(execute: {
+                    DispatchQueue.main.async(execute: {
+                        if (status == "s") {
                             self.present(Constants.createAlert(title: "Success", message: message), animated: true, completion: nil)
-                        })
-                    }
-                    if (status == "e") {
-                        DispatchQueue.main.async(execute: {
+                        } else {
                             self.present(Constants.createAlert(title: "Error", message: message), animated: true, completion: nil)
-                        })
-                    }
-                } catch let error as NSError {
-                    print("Failed to load : \(error.localizedDescription)")
+                        }
+                    })
+                } catch _ as NSError {
+                    self.showError(message: Constants.error_general)
+                    return
                 }
             }
             task.resume()
