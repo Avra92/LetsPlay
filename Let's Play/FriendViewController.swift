@@ -129,18 +129,18 @@ class FriendViewController: UIViewController, UITableViewDataSource, UITableView
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 140
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell") as! FriendViewCell
         if (isSearching) {
-            cell.img_gameIcon.image = UIImage(named: Constants.gameReverseDict[filterUserArray[indexPath.row].game]!)
+            cell.img_gameIcon.image = UIImage(named: filterUserArray[indexPath.row].game)
             cell.lbl_username.text = filterUserArray[indexPath.row].username
             cell.lbl_name.text = filterUserArray[indexPath.row].name
         } else {
-            cell.img_gameIcon.image = UIImage(named: Constants.gameReverseDict[userDetailArray[indexPath.row].game]!)
+            cell.img_gameIcon.image = UIImage(named: userDetailArray[indexPath.row].game)
             cell.lbl_username.text = userDetailArray[indexPath.row].username
             cell.lbl_name.text = userDetailArray[indexPath.row].name
         }

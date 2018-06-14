@@ -128,6 +128,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.view_container.layer.cornerRadius = 10
         cell.view_container.layer.borderWidth = 2
         cell.view_container.layer.borderColor = UIColor.white.cgColor
+        cell.view_container.backgroundColor = UIColor(patternImage: UIImage(named: "\(resultArray[indexPath.row].game)_banner")!)
         cell.backgroundColor = UIColor.clear
         cell.btn_addFriends.tag = indexPath.row
         cell.btn_addFriends.addTarget(self, action: #selector(didTapAddFriends(sender:)), for: .touchUpInside)

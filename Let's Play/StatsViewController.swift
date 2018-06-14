@@ -28,7 +28,8 @@ class StatsViewController: UIViewController, UITableViewDataSource, UITableViewD
         activityIndicator = UIActivityIndicatorView()
         tableView.delegate = self
         tableView.dataSource = self
-        img_gameIcon.image = UIImage(named: Constants.gameReverseDict[gamePass!]!)
+        let image = "\(gamePass!)_banner"
+        img_gameIcon.image = UIImage(named: image)
         statDetailArray = []
         statValueArray = []
         showOrHideActivityIndicator(show: true)

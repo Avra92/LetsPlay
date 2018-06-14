@@ -126,20 +126,20 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 180
+        return 165
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShareCell") as! ShareViewCell
         if (isSearching) {
-            cell.img_gameIcon.image = UIImage(named: Constants.gameReverseDict[filterUserArray[indexPath.row].game]!)
+            cell.img_gameIcon.image = UIImage(named: filterUserArray[indexPath.row].game)
             cell.lbl_username.text = filterUserArray[indexPath.row].username
             cell.lbl_inGameName.text = filterUserArray[indexPath.row].in_game_name
             cell.lbl_name.text = filterUserArray[indexPath.row].name
             cell.btn_add.isHidden = filterUserArray[indexPath.row].is_friend
         } else {
-            cell.img_gameIcon.image = UIImage(named: Constants.gameReverseDict[userDetailArray[indexPath.row].game]!)
+            cell.img_gameIcon.image = UIImage(named: userDetailArray[indexPath.row].game)
             cell.lbl_username.text = userDetailArray[indexPath.row].username
             cell.lbl_inGameName.text = userDetailArray[indexPath.row].in_game_name
             cell.lbl_name.text = userDetailArray[indexPath.row].name
