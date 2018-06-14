@@ -125,7 +125,7 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 180
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         
@@ -146,7 +146,10 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         cell.Add.tag = indexPath.row
         cell.Add.addTarget(self, action:#selector(add(sender:)), for: .touchUpInside)
-        cell.layer.cornerRadius = cell.frame.height/2
+        cell.container.layer.cornerRadius = 10
+        cell.container.layer.borderWidth = 2
+        cell.container.layer.borderColor = UIColor.white.cgColor
+        cell.backgroundColor = UIColor.clear
         return cell
     }
     

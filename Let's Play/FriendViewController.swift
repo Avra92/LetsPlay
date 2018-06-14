@@ -144,7 +144,10 @@ class FriendViewController: UIViewController, UITableViewDataSource, UITableView
             cell.f_userName.text = userDetailArray[indexPath.row].username
             cell.friendName.text = userDetailArray[indexPath.row].name
         }
-        cell.layer.cornerRadius = cell.frame.height/2
+        cell.container.layer.cornerRadius = 10
+        cell.container.layer.borderWidth = 2
+        cell.container.layer.borderColor = UIColor.white.cgColor
+        cell.backgroundColor = UIColor.clear
         return cell
     }
     

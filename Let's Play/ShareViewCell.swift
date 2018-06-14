@@ -15,6 +15,9 @@ class ShareViewCell: UITableViewCell {
     @IBOutlet weak var friendName: UILabel!
     @IBOutlet weak var friendUserName: UILabel!
     @IBOutlet weak var f_inGameName: UILabel!
+    @IBOutlet weak var container: UIView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
