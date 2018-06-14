@@ -57,7 +57,8 @@ class ViewController: UIViewController {
                 {
                     DispatchQueue.main.async(execute:{
                         UserDefaults.standard.set("\(String(describing: uname!))", forKey: "username")
-                        self.performSegue(withIdentifier: "HomeView", sender: self)
+                        let homeController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController
+                        self.navigationController?.pushViewController(homeController!, animated: true)
                     })
                 }
                 if (status == "e"){
@@ -79,5 +80,15 @@ class ViewController: UIViewController {
         task.resume()
     }
 
+    @IBAction func register(_ sender: UIButton) {
+        let registerController = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewController") as? RegisterViewController
+        self.navigationController?.pushViewController(registerController!, animated: true)
+    }
+    
+    
+    @IBAction func forgotPassword(_ sender: UIButton) {
+        let forgotPassController = self.storyboard?.instantiateViewController(withIdentifier: "ForgotPassViewController") as? ForgotPassViewController
+        self.navigationController?.pushViewController(forgotPassController!, animated: true)
+    }
 }
 
