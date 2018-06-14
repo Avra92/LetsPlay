@@ -42,7 +42,7 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        let postString = "username=\(String(describing: userName!))&game=\(String(describing: Constants.gameDict[gameName!]!))&search=\(String(describing: searchValue!))"
+        let postString = "username=\(String(describing: userName!))&game=\(String(describing: gameName!))&search=\(String(describing: searchValue!))"
         request.httpBody = postString.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error

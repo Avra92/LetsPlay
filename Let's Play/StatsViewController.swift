@@ -17,7 +17,7 @@ class StatsViewController: UIViewController, UITableViewDataSource, UITableViewD
     var gamePass:String?
     var nickNamePass:String?
     var platformPass:String?
-    var nickPass:String?
+    var uname:String?
     
     var statDetailArray = [String]()
     var statValueArray = [String]()
@@ -31,16 +31,19 @@ class StatsViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidAppear(_ animated: Bool) {
         tableView.delegate = self
         tableView.dataSource = self
-        gameNick.text = nickPass!
-        gameIcon.image = UIImage(named: gamePass!)
+        gameIcon.image = UIImage(named: Constants.gameReverseDict[gamePass!]!)
         statDetailArray = []
         statValueArray = []
-        let uname = UserDefaults.standard.string(forKey: "username") as String!
+        
         let url = URL(string: "https://www.jak2018.freehosting.co.nz/api/getgamestats.php")!
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        let postString = "username=\(String(describing: uname!))&game=\(String(describing: Constants.gameDict[gamePass!]!))&nickname=\(String(describing: nickNamePass!))&platform=\(String(describing: platformPass!))"
+        print(gamePass!)
+        print(nickNamePass!)
+        print(platformPass!)
+        print(uname!)
+        let postString = "username=\(String(describing: uname!))&game=\(String(describing: gamePass!))&nickname=\(String(describing: nickNamePass!))&platform=\(String(describing: platformPass!))"
         request.httpBody = postString.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
@@ -79,6 +82,11 @@ class StatsViewController: UIViewController, UITableViewDataSource, UITableViewD
                                 })
                             }
                         }
+                    }
+                    if let inGameNick = json?.value(forKey: "in_game_name") as? String {
+                        DispatchQueue.main.async(execute:{
+                             self.gameNick.text = inGameNick
+                        })
                     }
                 }
                 if (status == "e"){
