@@ -92,13 +92,14 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             return
         }
 
-        //Password validation it must have atleast 6 characters, 1 uppercase,1 lower case alphabet and 1 special character
+        //Password validation it must have atleast 6 characters and maximum 15 characters, 1 uppercase,1 lower case alphabet and 1 special character
         if (!passwordTest.evaluate(with: pass)) {
             self.present(Constants.createAlert(title: "Error", message: "Your password is not strong. Please make sure it has 6-15 characters, upper and lower case alphabets and special characters"), animated: true, completion: nil)
             return
         }
 
         showOrHideActivityIndicator(show: true)
+        //Calling the registerURL API by passing the below mentioned fields in postString
         let postString = "username=\(String(describing: uname!))&password=\(String(describing: pass!))&email=\(String(describing: email!))&gender=\(String(describing: gender!))&name=\(String(describing: name!))&device=ios"
         let request = Constants.createRequest(url: Constants.registerURL, postString: postString)
 
@@ -122,6 +123,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? [String: Any]
                 let status = (json!["status"] as? String)!
                 let message = (json!["message"] as? String)!
+                //Checking the status after parsing the JSON Data received if it's 's' then a message is displayed that registration is successful else error is thrown
                 DispatchQueue.main.async(execute: {
                     if (status == "s") {
                         self.present(Constants.createAlert(title: "Success", message: message), animated: true, completion: nil)

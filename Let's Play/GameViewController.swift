@@ -27,12 +27,15 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let platformList = ["Android", "iOS", "PC", "PS4", "Xbox"]
     var platformMenu = UIPickerView()
 
+    //Creating csgo platformlist
     let csgoList = ["Custom URL ID", "Steam 64 ID"]
     var csgoMenu = UIPickerView()
 
+    //Creating Fortnite platformlist
     let fortniteList = ["PC", "PS4", "Xbox"]
     var fortniteMenu = UIPickerView()
 
+    //Creating Clash of Clans and Clash Royale platformlist
     let cocList = ["Android", "iOS"]
     var cocMenu = UIPickerView()
 
@@ -112,6 +115,7 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
     }
 
+    //Based on the game selected in txt_game the picker list for txt_platform will change
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if (selectedField == 1) {
             txt_game.text = gameList[row]
@@ -161,11 +165,13 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         statValueArray = []
 
         let uname = UserDefaults.standard.string(forKey: "username") as String!
-
+        
+        //Checking if the user is trying to add games leaving some fields empty
         if (game!.isEmpty || gameId!.isEmpty || platform!.isEmpty) {
             self.present(Constants.createAlert(title: "Error", message: "Please fill all the fields"), animated: true, completion: nil)
         } else {
             showOrHideActivityIndicator(show: true)
+            //Calling the addGame URL by passing the username, game name, nickname and the platform the user plays that game
             let postString = "username=\(String(describing: uname!))&game=\(String(describing: Constants.gameDict[game!]!))&nickname=\(String(describing: gameId!))&platform=\(String(describing: Constants.platDict[platform!]!))"
             let request = Constants.createRequest(url: Constants.addGameURL, postString: postString)
 

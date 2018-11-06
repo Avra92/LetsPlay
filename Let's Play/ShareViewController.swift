@@ -17,6 +17,7 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
     var userName: String?
     var searchValue: String?
     var userDetailArray = [Result]()
+    //filterUserArray is used to store filtered data based on what the user is typing in search bar
     var filterUserArray = [Result]()
     var isSearching = false
 
@@ -33,6 +34,7 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.delegate = self
         tableView.dataSource = self
         showOrHideActivityIndicator(show: true)
+        //Calling the Search URl API by passing the username, gamename and search value. We are passing '%' for the first time when the screen is loaded so as to retuen all the user who have that gamename added in profile
         let postString = "username=\(String(describing: userName!))&game=\(String(describing: gameName!))&search=\(String(describing: searchValue!))"
         let request = Constants.createRequest(url: Constants.searchURL, postString: postString)
 
@@ -57,6 +59,7 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
                 let status = (json!["status"] as? String)!
                 let message = (json!["message"] as? String)!
                 if (status == "s") {
+                    //Is the JSON data is parsed successfully then we are storing the in game name of the user, name, username, game name and is_friend in the Result struct
                     if let userDetails = json?.value(forKey: "results") as? NSArray {
                         for userDetail in userDetails {
                             if let userDetailDict = userDetail as? NSDictionary {
@@ -129,9 +132,11 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
         return 165
     }
 
+    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShareCell") as! ShareViewCell
+        //if user is typing name of user in searchbar and there are matches then the results are fetched from filterUserArray else it's fetched from UserDetailArray
         if (isSearching) {
             cell.img_gameIcon.image = UIImage(named: filterUserArray[indexPath.row].game)
             cell.lbl_username.text = filterUserArray[indexPath.row].username
@@ -233,6 +238,7 @@ class ShareViewController: UIViewController, UITableViewDataSource, UITableViewD
         // Dispose of any resources that can be recreated.
     }
 
+    //Result Structure is used to store the game name, the name of the user in the game, a boolean value is_friend, name of the users and their registered username in Let's Play app
     struct Result {
         var game: String
         var in_game_name: String

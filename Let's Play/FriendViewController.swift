@@ -39,7 +39,8 @@ class FriendViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         userName = UserDefaults.standard.string(forKey: "username") as String!
-
+        
+        //Calling the Friends List URL by passing the username
         let postString = "username=\(String(describing: userName!))"
         let request = Constants.createRequest(url: Constants.friendsListUrl, postString: postString)
 
@@ -66,6 +67,7 @@ class FriendViewController: UIViewController, UITableViewDataSource, UITableView
                 let status = (json!["status"] as? String)!
                 let message = (json!["message"] as? String)!
                 if (status == "s") {
+                    //If the JSON Data is parsed successfully we are storing the name, username, game, nickname and platform from friends Dictionary
                     if let userDetails = json?.value(forKey: "friends") as? NSArray {
                         for userDetail in userDetails {
                             if let userDetailDict = userDetail as? NSDictionary {
@@ -151,6 +153,7 @@ class FriendViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
     }
 
+    //If a row from the list displayed is selected then user will be directed to the stats screen displaying the stats for that friend of his for that particular game
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let statsController = storyboard?.instantiateViewController(withIdentifier: "StatsViewController") as? StatsViewController
         if (isSearching) {
@@ -168,6 +171,7 @@ class FriendViewController: UIViewController, UITableViewDataSource, UITableView
         self.navigationController?.pushViewController(statsController!, animated: true)
     }
 
+    //User can delete a friend by swiping the row left an alert pops up confirming whether they really want to delete that friend or not if clicked yes the Remove Friend API is called ensuring the delete request is carried out
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         var frndName: String?
         var gameName: String?
@@ -250,6 +254,7 @@ class FriendViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
 
+    //Result structure containing game name, name of the friend, his/her username, nickname they are using and the platform they play the particular game on
     struct Result {
         var game: String
         var name: String

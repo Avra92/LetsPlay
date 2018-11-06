@@ -38,9 +38,11 @@ class ForgotPassViewController: UIViewController {
         }
     }
 
+    //After providing the username in the Text field if the user clicks this button an email will be sent to them providing the password they have set during the time of registration
     @IBAction func didTapSubmit(_ sender: UIButton) {
         let uname = txt_username.text?.trimmingCharacters(in: .whitespacesAndNewlines)
 
+        //Checking whether the user is trying to get their Passowrd without providing their Username
         if (uname!.isEmpty) {
             self.present(Constants.createAlert(title: "Error", message: "Please enter your username"), animated: true, completion: nil)
             return

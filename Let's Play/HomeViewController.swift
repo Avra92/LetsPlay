@@ -34,7 +34,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.delegate = self
         tableView.dataSource = self
         uname = UserDefaults.standard.string(forKey: "username") as String!
-
+        
+        //Calling the gameListURL API by passing the username with which the user logged in
         let postString = "username=\(String(describing: uname!))"
         let request = Constants.createRequest(url: Constants.gamesListURL, postString: postString)
 
@@ -60,6 +61,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let status = jsonObj!["status"] as! String
                 let message = jsonObj!["message"] as! String
                 if (status == "s") {
+                    //If the JSON data is received successfully then from "games" dictionary we are storing the game name, nickname of user, platform used for that game and the name of user in that game
                     if let gameDetails = jsonObj!.value(forKey: "games") as? NSArray {
                         for gameDetail in gameDetails {
                             if let gameDetailDict = gameDetail as? NSDictionary {
@@ -137,6 +139,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
     }
 
+    //Games can be deleted from the Home screen by swiping left an alert will pop up confirming whether the user really wants to delete that game or not? If clicked Yes then that game will be removed from his profile
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let game = resultArray[indexPath.row].game
@@ -196,6 +199,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         task.resume()
     }
 
+    //Clicking a particular Game list row in Home Screen stats screen will be displayed showing the users stats in that particular game
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let statsController = storyboard?.instantiateViewController(withIdentifier: "StatsViewController") as? StatsViewController
         statsController?.uname = usrname
@@ -205,6 +209,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.navigationController?.pushViewController(statsController!, animated: true)
     }
 
+    //Add friends button for a particular game will direct user to a screen displaying a list of users who play that game
     @IBAction func didTapAddFriends(sender: UIButton) {
         let index = sender.tag
         let shareController = storyboard?.instantiateViewController(withIdentifier: "ShareViewController") as? ShareViewController
@@ -214,6 +219,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.navigationController?.pushViewController(shareController!, animated: true)
     }
 
+    //Let's Play button for a particular game will send an email notification to their friends
     @IBAction func didTapLetsPlay(sender: UIButton) {
         showOrHideActivityIndicator(show: true)
         let index = sender.tag
@@ -258,11 +264,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
 
+    //Clicking the Add Game button in Home screen user will be directed to a new screen where they can add the games they want to their profile with the help of this function
     @IBAction func didTapAddGame(_ sender: Any) {
         let addGameController = storyboard?.instantiateViewController(withIdentifier: "GameViewController") as? GameViewController
         self.navigationController?.pushViewController(addGameController!, animated: true)
     }
 
+    //Clicking the friends button in Home screen user will be directed to the Friend list screen showing all his/her added friends with the help of this function
     @IBAction func didTapFriendsList(_ sender: UIButton) {
         let friendController = storyboard?.instantiateViewController(withIdentifier: "FriendViewController") as? FriendViewController
         self.navigationController?.pushViewController(friendController!, animated: true)
@@ -273,6 +281,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Dispose of any resources that can be recreated.
     }
 
+    //Result structure contains the game name, user nickname, platform he plays the game on and also the nick of the user in that particular game
     struct Result {
         var game: String
         var nickname: String

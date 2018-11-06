@@ -30,6 +30,7 @@ class ViewController: UIViewController {
         })
     }
 
+    //Activity Indicator is added to restrict the user from using other functionalities in app when the API is called
     func showOrHideActivityIndicator(show: Bool) {
         if (show) {
             activityIndicator?.center = self.view.center
@@ -44,15 +45,19 @@ class ViewController: UIViewController {
         }
     }
 
+    //This function is called when the login button is tapped by user and the login URL is
+    //called to validate the username and password
     @IBAction func didTapLogin(_ sender: UIButton) {
         let uname = txt_username.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let pass = txt_password.text?.trimmingCharacters(in: .whitespacesAndNewlines)
 
+        //Checking whether the user is trying to login without providing their Username
         if (uname!.isEmpty) {
             self.present(Constants.createAlert(title: "Error", message: "Please enter your username"), animated: true, completion: nil)
             return
         }
 
+        //Checking whether the user is trying to login with providing their Password
         if (pass!.isEmpty) {
             self.present(Constants.createAlert(title: "Error", message: "Please enter your password"), animated: true, completion: nil)
             return
@@ -81,6 +86,10 @@ class ViewController: UIViewController {
                 let json = try JSONSerialization.jsonObject(with: Data!, options: []) as? [String: Any]
                 let status = (json!["status"] as? String)!
                 let message = (json!["message"] as? String)!
+                
+                //JSON Data received is parsed to get the Status and message, status value is
+                //checked if it's 's' means success and user will be directed to Home screen else
+                //if it's 'e' means some error occured
                 DispatchQueue.main.async(execute: {
                     if (status == "s") {
                         UserDefaults.standard.set("\(String(describing: uname!))", forKey: "username")
@@ -97,12 +106,16 @@ class ViewController: UIViewController {
         task.resume()
     }
 
+    //Clicking the Register button the user will be directed to the Registration screen with
+    //the help of this function
     @IBAction func didTapRegister(_ sender: UIButton) {
         let registerController = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewController") as? RegisterViewController
         self.navigationController?.pushViewController(registerController!, animated: true)
     }
 
 
+    //Clicking the forgot password button the user will be directed to Forgot Password screen
+    //with the help of this function
     @IBAction func didTapForgotPassword(_ sender: UIButton) {
         let forgotPassController = self.storyboard?.instantiateViewController(withIdentifier: "ForgotPassViewController") as? ForgotPassViewController
         self.navigationController?.pushViewController(forgotPassController!, animated: true)

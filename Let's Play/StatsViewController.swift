@@ -28,11 +28,13 @@ class StatsViewController: UIViewController, UITableViewDataSource, UITableViewD
         activityIndicator = UIActivityIndicatorView()
         tableView.delegate = self
         tableView.dataSource = self
+        //Based on the game name passed the image is set in the stats screen
         let image = "\(gamePass!)_banner"
         img_gameIcon.image = UIImage(named: image)
         statDetailArray = []
         statValueArray = []
         showOrHideActivityIndicator(show: true)
+        //Calling the gameStatsURL by passing the username, name of game, nickname of the user and the platform he is using for that game
         let postString = "username=\(String(describing: uname!))&game=\(String(describing: gamePass!))&nickname=\(String(describing: nickNamePass!))&platform=\(String(describing: platformPass!))"
         let request = Constants.createRequest(url: Constants.gameStatsURL, postString: postString)
 
@@ -59,6 +61,7 @@ class StatsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 let status = (json!["status"] as? String)!
                 let message = (json!["message"] as? String)!
                 if (status == "s") {
+                    //If the JSON Data is parsed successfully we are fetching the key and value from "stats" dictionary and storing them in 2 arrays
                     if let statDetails = json?.value(forKey: "stats") as? NSArray {
                         for statDetail in statDetails {
                             if let statDetailDict = statDetail as? NSDictionary {
@@ -74,6 +77,7 @@ class StatsViewController: UIViewController, UITableViewDataSource, UITableViewD
                             }
                         }
                     }
+                    //Displaying the in_game_name of the user in a label in stats screen
                     if let inGameNick = json?.value(forKey: "in_game_name") as? String {
                         DispatchQueue.main.async(execute: {
                             self.lbl_gameNick.text = inGameNick
@@ -108,7 +112,9 @@ class StatsViewController: UIViewController, UITableViewDataSource, UITableViewD
             activityIndicator?.stopAnimating()
         }
     }
-
+    
+    
+    //Using a Table View to display the stats
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return statDetailArray.count
 
